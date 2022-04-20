@@ -71,7 +71,7 @@ public class Casa {
     {
         this.devices.values().forEach(device -> device.setOn());
     }
-   /** Funções da casa  O mauricio e gay*/
+   /** Funções da casa  Neiva deixa te de Merdas */
     // Map<String, List<String>>
     public void addRoom(String s)
     {
