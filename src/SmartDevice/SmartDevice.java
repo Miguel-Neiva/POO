@@ -14,7 +14,7 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
         ON
     }
 
-    /** The "empty" constructor creates a (useless) Device, with no information whatsoever.  */
+    /** O construtor vazio cria um Device (inútil) e sem informação. */
     public SmartDevice () {
         this.state = State.OFF;
         this.id = "No Device given";
@@ -24,8 +24,8 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
     public SmartDevice (String id) {
         this.state = State.OFF;
     }
-    /** The "Sub-Standard" constructor creates a (useful) device,
-     * given all it's attributes and its subbed off status. */
+    /** O construtor "Sub-Standard" cria um device (útil),
+     * com toda a informação e inicia com o modo que lhe é passado. */
     public SmartDevice (String id, State state) {
         this.id = id;
         this.state = state;
