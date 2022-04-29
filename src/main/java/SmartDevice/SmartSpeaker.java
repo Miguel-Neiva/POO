@@ -12,6 +12,7 @@ public class SmartSpeaker extends SmartDevice{
 
     private int volume;
     private String channel;
+    private String SpeakerBrand;
 
     /**
      * Constructor for objects of class SmartSpeaker
@@ -21,13 +22,15 @@ public class SmartSpeaker extends SmartDevice{
         super();
         this.volume = 0;
         this.channel = "";
+        this.SpeakerBrand = "";
     }
 
-    public SmartSpeaker(String s) {
+    public SmartSpeaker(String channel, int volume, String SpeakerBrand) {
         // initialise instance variables
         super();
-        this.channel = s;
+        this.channel = channel;
         this.volume = 10;
+        this.SpeakerBrand = SpeakerBrand;
     }
 
     public SmartSpeaker(String s, String s1, int i) {
