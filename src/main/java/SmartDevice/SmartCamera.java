@@ -31,6 +31,13 @@ public class SmartCamera extends SmartDevice{
         return size == that.size && Objects.equals(resolution, that.resolution);
     }
 
+    @Override
+    public String toString() {
+        return "SmartCamera{" +
+                "resolution=" + resolution +
+                ", size=" + size +
+                '}';
+    }
 
     /** The number that represents a position */
     public Integer representedBy() {

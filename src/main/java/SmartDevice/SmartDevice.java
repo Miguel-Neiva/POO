@@ -9,7 +9,7 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
     private State state;
 
 
-    enum State {
+    public enum State {
         OFF,
         ON
     }
@@ -62,6 +62,15 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
         SmartDevice p = (SmartDevice) obj;
         return this.id.equals(p.getId());
     }
+
+    @Override
+    public String toString() {
+        return "SmartDevice{" +
+                "id='" + id + '\'' +
+                ", state=" + state +
+                '}';
+    }
+
     /** The number that represents a position */
     public abstract Integer representedBy();
 

@@ -25,21 +25,11 @@ public class SmartSpeaker extends SmartDevice{
         this.SpeakerBrand = "";
     }
 
-    public SmartSpeaker(String channel, int volume, String SpeakerBrand) {
-        // initialise instance variables
-        super();
+    public SmartSpeaker(String id, State state, int volume, String channel, String speakerBrand) {
+        super(id, state);
+        this.volume = volume;
         this.channel = channel;
-        this.volume = 10;
-        this.SpeakerBrand = SpeakerBrand;
-    }
-
-    public SmartSpeaker(String s, String s1, int i) {
-        // initialise instance variables
-        super(s);
-        this.channel = s1;
-
-        if (i < 0) this.volume = 0;
-        else this.volume = i;
+        this.SpeakerBrand = speakerBrand;
     }
 
     public void volumeUp() {
@@ -55,9 +45,21 @@ public class SmartSpeaker extends SmartDevice{
         return this.volume;
     }
 
+    @Override
+    public String toString() {
+        return "SmartSpeaker{" +
+                "volume=" + volume +
+                ", channel='" + channel + '\'' +
+                ", SpeakerBrand='" + SpeakerBrand + '\'' +
+                '}';
+    }
+
     public String getChannel()
     {
         return this.channel;
+    }
+    public String getSpeakerBrand(){
+        return this.SpeakerBrand;
     }
 
     public void setChannel(String c)
