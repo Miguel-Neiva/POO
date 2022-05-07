@@ -95,22 +95,25 @@ public class House {
         this.nif = nif;
     }
 
+    /** Function that checks if a device exits in the house **/
     public boolean existsDevice(String id)
     {
         return this.devices.containsKey(id);
     }
 
+    /** Function that adds a device in the house **/
     public void addDevice(SmartDevice s)
     {
         this.devices.put(s.getId(), s);
     }
+
     /** Function that receives a Id and gives the device **/
     public SmartDevice getDeviceById(String s)
     {
-        this.devices.get(s);
+        return this.devices.get(s);
     }
 
-
+    /** Function that receives a House location and set all the device.s to On **/
     public void setAllOn(String roomId)
     {
         for (String deviceId : this.locations.get(roomId))
@@ -119,11 +122,7 @@ public class House {
             if (dev != null) dev.setOn();
         }
     }
-    /** Function that receives a House location and set all the device.s to On **/
-    public void setAlOn(List<String> id)
-    {
-        
-    }
+
     /** Function that adds a location to the house **/
     public void addRoom(String s)
     {
@@ -131,17 +130,26 @@ public class House {
         this.locations.put(s, rooms);
     }
 
+    /** Function that removes a location of the house **/
+    public void removeRoom(String s)
+    {
+        this.locations.remove(s);
+    }
+
+    /** Function that checks if a location exists in the house **/
     public boolean hasRoom(String s)
     {
         return this.locations.containsKey(s);
     }
 
+    /** Function that adds a device to a location in the house **/
     public void addToRoom (String s1, String s2)
     {
         List<String> location = this.locations.get(s1);
         location.add(s2);
     }
 
+    /** Function that checks if a device exist in a location in the house **/
     public boolean roomHasDevice (String s1, String s2)
     {
         List<String> location = this.locations.get(s1);

@@ -44,3 +44,4 @@ public class SmartCamera extends SmartDevice{
         return 1;
     }
 }
+
