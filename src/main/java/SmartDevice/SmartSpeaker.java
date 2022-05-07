@@ -69,4 +69,5 @@ public class SmartSpeaker extends SmartDevice{
     public Integer representedBy() {
         return 1;}
 
+
 }
