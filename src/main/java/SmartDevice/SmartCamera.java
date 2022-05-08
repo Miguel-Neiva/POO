@@ -44,4 +44,11 @@ public class SmartCamera extends SmartDevice{
     public Integer representedBy() {
         return 1;
     }
+
+    public int consumption(CameraResolution resolution,  int size){
+        // só uma ideia, funciona assim pq quanto maior for a res mais comsumo tem
+        return this.resolution.width *this.resolution.height * size;
+    }
+
 }
+
