@@ -13,7 +13,8 @@ public class SmartCamera extends SmartDevice{
         this.size = 0;
     }
 
-    public SmartCamera (CameraResolution resolution,  int size) {
+    public SmartCamera (String id, State state,CameraResolution resolution,  int size) {
+        super(id,state);
         this.resolution = new CameraResolution(resolution.height,resolution.width);
         this.size = size;
     }

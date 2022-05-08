@@ -1,6 +1,8 @@
 package SmartDevice;
 
 
+import House.House;
+
 import java.io.Serializable;
 
 
@@ -60,7 +62,7 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
         if ((obj == null)) return false;
 
         SmartDevice p = (SmartDevice) obj;
-        return this.id.equals(p.getId());
+        return this.id.equals(p.getId()) && this.state.equals(p.getState());
     }
 
     @Override

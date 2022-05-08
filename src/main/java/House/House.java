@@ -2,6 +2,8 @@ package House;
 
 
 
+import Exceptions.DeviceDoesNotExistException;
+import Exceptions.RoomDoesNotExistException;
 import SmartDevice.*;
 
 import java.util.*;
@@ -24,7 +26,7 @@ public class House {
 
     /**
      * Constructor for objects of class CasaInteligente
-     *
+     
      */
     public House() {
         // initialise instance variables
@@ -75,7 +77,9 @@ public class House {
     }
     public Map<String, SmartDevice> getDevices() {
         Map<String,SmartDevice> devices = new HashMap<>();
-        devices.putAll(this.devices);
+        for(Map.Entry<String,SmartDevice> dev : this.devices.entrySet()) {
+            if(dev.getValue() != null) devices.put(dev.getKey(), dev.getValue());
+        }
         return devices;
     }
     public Map<String,List<String>> getLocations(){
@@ -105,12 +109,12 @@ public class House {
         this.devices.put(s.getId(), s);
     }
     /** Function that receives a Id and gives the device **/
-    public SmartDevice getDeviceById(String s)
+   /* public SmartDevice getDeviceById(String s)
     {
         this.devices.get(s);
     }
-
-
+*/
+    /** Function that receives a House location and set all the device.s to On **/
     public void setAllOn(String roomId)
     {
         for (String deviceId : this.locations.get(roomId))
@@ -119,11 +123,16 @@ public class House {
             if (dev != null) dev.setOn();
         }
     }
-    /** Function that receives a House location and set all the device.s to On **/
-    public void setAlOn(List<String> id)
+
+    public void setAllOff(String roomId)
     {
-        
+        for(String deviceId: this.locations.get(roomId))
+        {
+            SmartDevice dev = this.devices.get(deviceId);
+            if(dev != null) dev.setOff();
+        }
     }
+
     /** Function that adds a location to the house **/
     public void addRoom(String s)
     {
@@ -131,9 +140,10 @@ public class House {
         this.locations.put(s, rooms);
     }
 
-    public boolean hasRoom(String s)
+    public boolean hasRoom (String s) throws RoomDoesNotExistException
     {
-        return this.locations.containsKey(s);
+        if (!this.locations.containsKey(s)) throw new RoomDoesNotExistException ("Room was not founded");
+        else return this.locations.containsKey(s) ;
     }
 
     public void addToRoom (String s1, String s2)
@@ -148,4 +158,16 @@ public class House {
         return location.contains(s2);
     }
 
+
+
+    public void setOffOneDevice(String s) throws DeviceDoesNotExistException {
+        for (Map.entry(): this.locations.entrySet())
+        {
+            for(List<String> str : this.locations.values()) {
+                if(str.equals(s)) { this.locations.get(dev).stream().findFirst().
+                }
+
+            }
+        }
+    }
 }
