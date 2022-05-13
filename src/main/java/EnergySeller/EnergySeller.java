@@ -8,24 +8,28 @@ import java.util.random.RandomGenerator;
 
 public class EnergySeller {
     private String energySeller;
-    private Double kwDay;
-    private Map<String,Double> sellers;
-
+    private Map<String,Double> sellers; // -> EnergySeller and the price of the Kw
+    // Empty Constructor
     public EnergySeller () {
         this.energySeller = " ";
-        this.kwDay = 0.0;
         this.sellers = new HashMap<>();
     }
 
-    public EnergySeller(String energySeller, Double kwDay, Map<String,Double> sellers) {
+    @Override
+    public String toString() {
+        return "EnergySeller{" +
+                "energySeller='" + energySeller + '\'' +
+                ", sellers=" + sellers +
+                '}';
+    }
+
+    public EnergySeller(String energySeller, Map<String,Double> sellers) {
         this.energySeller = energySeller;
-        this.kwDay = kwDay;
         this.sellers = new HashMap<>(sellers);
     }
 
     public EnergySeller(EnergySeller seller) {
         this.energySeller = seller.getEnergySeller();
-        this.kwDay= seller.getKwDay();
         this.sellers = seller.getSellers();
     }
     public Map<String, Double> getSellers() {
@@ -59,25 +63,19 @@ public class EnergySeller {
         this.energySeller = energySeller;
     }
 
-    public Double getKwDay() {
-        return kwDay;
-    }
 
-    public void setKwDay(Double kwDay) {
-        this.kwDay = kwDay;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EnergySeller that = (EnergySeller) o;
-        return Objects.equals(energySeller, that.energySeller) && Objects.equals(kwDay, that.kwDay) && Objects.equals(sellers, that.sellers);
+        return Objects.equals(energySeller, that.energySeller) &&  Objects.equals(sellers, that.sellers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(energySeller, kwDay, sellers);
+        return Objects.hash(energySeller,sellers);
     }
 
     public EnergySeller clone() {
