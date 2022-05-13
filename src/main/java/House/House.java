@@ -2,6 +2,7 @@ package House;
 
 
 
+import Exceptions.DeviceDoesNotExistException;
 import SmartDevice.*;
 
 import java.util.*;
@@ -75,7 +76,9 @@ public class House {
     }
     public Map<String, SmartDevice> getDevices() {
         Map<String,SmartDevice> devices = new HashMap<>();
-        devices.putAll(this.devices);
+        for(Map.Entry<String,SmartDevice> dev : this.devices.entrySet()) {
+            if(dev.getValue() != null) devices.put(dev.getKey(), dev.getValue().clone());
+        }
         return devices;
     }
     public Map<String,List<String>> getLocations(){
@@ -107,7 +110,7 @@ public class House {
     /** Function that receives a Id and gives the device **/
     public SmartDevice getDeviceById(String s)
     {
-        this.devices.get(s);
+        return this.devices.get(s);
     }
 
 
@@ -148,4 +151,29 @@ public class House {
         return location.contains(s2);
     }
 
+    public void setOffOneDevice(String s) throws DeviceDoesNotExistException {
+        for (Map.Entry<String,List<String>> entry : this.locations.entrySet())
+        {
+            if(entry.getValue().contains(s))
+            {
+                String dev = entry.getValue().stream().filter(d -> d.equals(s)).findAny().orElse(null);
+                this.devices.get(dev).setOff();
+                break;
+            }
+            else throw new DeviceDoesNotExistException("Device does not exist");
+        }
+    }
+
+    public void setOnOneDevice(String s) throws DeviceDoesNotExistException {
+        for (Map.Entry<String,List<String>> entry : this.locations.entrySet())
+        {
+            if(entry.getValue().contains(s))
+            {
+                String dev = entry.getValue().stream().filter(d -> d.equals(s)).findAny().orElse(null);
+                this.devices.get(dev).setOff();
+                break;
+            }
+            else throw new DeviceDoesNotExistException("Device does not exist");
+        }
+    }
 }

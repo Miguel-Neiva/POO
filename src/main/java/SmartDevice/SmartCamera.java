@@ -8,6 +8,8 @@ public class SmartCamera extends SmartDevice{
     private CameraResolution resolution;
     private int size;
 
+    private double consumption;
+
     public SmartCamera () {
         this.resolution = new CameraResolution(0,0);
         this.size = 0;
@@ -17,6 +19,20 @@ public class SmartCamera extends SmartDevice{
         super(id,state);
         this.resolution = new CameraResolution(resolution.height,resolution.width);
         this.size = size;
+    }
+
+    public SmartCamera (SmartCamera dev) {
+        super(dev);
+        this.resolution =dev.getResolution();
+        this.size = dev.getSize();
+    }
+
+    public CameraResolution getResolution() {
+        return resolution;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     public void setResolution(CameraResolution resolution) {
@@ -38,6 +54,10 @@ public class SmartCamera extends SmartDevice{
                 "resolution=" + resolution +
                 ", size=" + size +
                 '}';
+    }
+    @Override
+    public SmartCamera clone () {
+        return new SmartCamera(this);
     }
 
     /** The number that represents a position */

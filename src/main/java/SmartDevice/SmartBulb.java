@@ -7,6 +7,7 @@ public class SmartBulb extends SmartDevice{
     private double consumption;
     private Tonality ton;
 
+
     enum Tonality {
         Neutral,
         Warm,
@@ -45,7 +46,10 @@ public class SmartBulb extends SmartDevice{
     }
 
     public double getConsumption() {
-        return consumption;
+
+        if(getTon()==Tonality.Neutral) return 0.5*consumption;
+        else if (getTon()==Tonality.Cold) return 0.1*consumption;
+        else return consumption;
     }
 
     @Override
@@ -57,6 +61,10 @@ public class SmartBulb extends SmartDevice{
         return Double.compare(smartBulb.dimension, dimension) == 0 && Double.compare(smartBulb.consumption, consumption) == 0 && ton == smartBulb.ton;
     }
 
+    @Override
+    public SmartBulb clone(){
+        return new SmartBulb(this);
+    }
 
 
     /** The number that represents a position */

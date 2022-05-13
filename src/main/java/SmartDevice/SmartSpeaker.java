@@ -13,6 +13,7 @@ public class SmartSpeaker extends SmartDevice{
     private int volume;
     private String channel;
     private String SpeakerBrand;
+    private Double consumption;
 
     /**
      * Constructor for objects of class SmartSpeaker
@@ -30,6 +31,12 @@ public class SmartSpeaker extends SmartDevice{
         this.volume = volume;
         this.channel = channel;
         this.SpeakerBrand = speakerBrand;
+    }
+    public SmartSpeaker(SmartSpeaker dev) {
+        super(dev);
+        this.SpeakerBrand = dev.getSpeakerBrand();
+        this.channel = dev.getChannel();
+        this.volume = dev.getVolume();
     }
 
     public void volumeUp() {
@@ -68,6 +75,9 @@ public class SmartSpeaker extends SmartDevice{
     }
     public Integer representedBy() {
         return 1;}
-
+    @Override
+    public SmartSpeaker clone () {
+        return new SmartSpeaker(this);
+    }
 
 }
