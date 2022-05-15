@@ -33,6 +33,11 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
         this.state = state;
     }
 
+    public SmartDevice (SmartDevice dev) {
+        this.id= dev.getId();
+        this.state= dev.getState();
+    }
+
     public String getId() {
         return id;
     }

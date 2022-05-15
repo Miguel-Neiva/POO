@@ -27,7 +27,7 @@ public class SmartBulb extends SmartDevice{
     }
 
     public SmartBulb(SmartBulb bulb) {
-        super();
+        super(bulb);
         this.dimension = bulb.getDimension();
         this.consumption = bulb.getConsumption();
         this.ton = bulb.getTon();
