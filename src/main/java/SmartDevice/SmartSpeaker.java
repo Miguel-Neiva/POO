@@ -33,7 +33,7 @@ public class SmartSpeaker extends SmartDevice{
         this.SpeakerBrand = speakerBrand;
     }
     public SmartSpeaker(SmartSpeaker dev) {
-        super(dev.toString());
+        super(dev);
         this.SpeakerBrand = dev.getSpeakerBrand();
         this.channel = dev.getChannel();
         this.volume = dev.getVolume();
