@@ -75,6 +75,7 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
 
     /** The number that represents a position */
     public abstract Integer representedBy();
+    public abstract SmartDevice clone();
 
     public int compareTo(SmartDevice otherDevices) {
         return Integer.compare(representedBy(), otherDevices.representedBy());
