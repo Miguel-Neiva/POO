@@ -8,45 +8,34 @@ import java.util.random.RandomGenerator;
 
 public class EnergySeller {
     private String energySeller;
-    private Map<String,Double> sellers; // -> EnergySeller and the price of the Kw
+    private Double priceKw; // -> EnergySeller and the price of the Kw
+    Random rand = new Random();
     // Empty Constructor
     public EnergySeller () {
         this.energySeller = " ";
-        this.sellers = new HashMap<>();
+        this.priceKw = (0.0);
     }
 
     @Override
     public String toString() {
         return "EnergySeller{" +
                 "energySeller='" + energySeller + '\'' +
-                ", sellers=" + sellers +
+                ", priceKw=" + priceKw +
                 '}';
     }
 
-    public EnergySeller(String energySeller, Map<String,Double> sellers) {
+    public EnergySeller(String energySeller) {
         this.energySeller = energySeller;
-        this.sellers = new HashMap<>(sellers);
+        this.priceKw = sellerPrice();
     }
 
     public EnergySeller(EnergySeller seller) {
         this.energySeller = seller.getEnergySeller();
-        this.sellers = seller.getSellers();
-    }
-    public Map<String, Double> getSellers() {
-        Map<String,Double> devices = new HashMap<>();
-        for(Map.Entry<String,Double> dev : this.sellers.entrySet()) {
-            if(dev.getValue() != null) devices.put(dev.getKey(), dev.getValue());
-        }
-        return sellers;
+        this.priceKw=seller.getPriceKw();
     }
 
-    public Double getSellerConsumption(String s) {
-        if(!this.sellers.containsKey(s)) {
-            List<String> sellers = new ArrayList<String>();
-            this.sellers.put(s,sellerPrice());
-            return this.sellers.get(s);
-        }
-        return this.sellers.get(s);
+    public Double getPriceKw() {
+        return priceKw;
     }
 
     public Double sellerPrice () {
@@ -63,20 +52,6 @@ public class EnergySeller {
         this.energySeller = energySeller;
     }
 
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EnergySeller that = (EnergySeller) o;
-        return Objects.equals(energySeller, that.energySeller) &&  Objects.equals(sellers, that.sellers);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(energySeller,sellers);
-    }
 
     public EnergySeller clone() {
         return new EnergySeller(this);

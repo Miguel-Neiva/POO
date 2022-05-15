@@ -2,6 +2,7 @@ package House;
 
 
 
+import EnergySeller.EnergySeller;
 import Exceptions.DeviceDoesNotExistException;
 import SmartDevice.*;
 
@@ -20,6 +21,7 @@ public class House {
 
     private String ownerName;
     private String nif;
+    private EnergySeller seller;
     private Map<String, SmartDevice> devices; // identificador -> SmartDevice
     private Map<String, List<String>> locations; // Espaço -> Lista codigo dos devices
 
@@ -35,10 +37,11 @@ public class House {
         this.locations = new HashMap();
     }
 
-    public House(String name, String nif) {
+    public House(String name, String nif,EnergySeller seller) {
         // initialise instance variables
         this.ownerName=name;
         this.nif=nif;
+        this.seller = new EnergySeller(seller);
         this.devices = new HashMap();
         this.locations = new HashMap();
     }
@@ -46,8 +49,13 @@ public class House {
     public House (House c) {
         this.ownerName=c.getOwnerName();
         this.nif=c.getNif();
+        this.seller=c.getSeller();
         this.devices = c.getDevices();
         this.locations=c.getLocations();
+    }
+
+    public EnergySeller getSeller() {
+        return seller;
     }
 
     public House clone(){
@@ -59,6 +67,14 @@ public class House {
         this.nif = nif;
         this.devices = devices;
         this.locations = locations;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public void setSeller(EnergySeller seller) {
+        this.seller = seller;
     }
 
     @Override
@@ -81,11 +97,22 @@ public class House {
         }
         return devices;
     }
+
+
     public Map<String,List<String>> getLocations(){
      Map<String,List<String>> locations = new HashMap<>();
      locations.putAll(this.locations);
      return locations;
     }
+
+    public  void setLocations(Map<String,List<String>> loc){
+        this.locations = new HashMap<>();
+        for(Map.Entry<String,List<String>>  dev : loc.entrySet()) {
+            this.locations.put(dev.getKey(), dev.getValue());
+        }
+    }
+
+
     public String getOwnerName() {
         return ownerName;
     }
