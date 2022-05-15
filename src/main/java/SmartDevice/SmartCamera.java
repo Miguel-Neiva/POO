@@ -22,7 +22,7 @@ public class SmartCamera extends SmartDevice{
     }
 
     public SmartCamera (SmartCamera dev) {
-        super(dev);
+        super(dev.toString());
         this.resolution =dev.getResolution();
         this.size = dev.getSize();
     }
