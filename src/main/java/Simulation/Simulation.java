@@ -34,10 +34,10 @@ public class Simulation {
         {
             Bill houseBill = new Bill();
 
-            houseBill.setDeviceNum(house.getTotalDevices());
+            houseBill.setNumDevices(house.getTotalDevices());
             houseBill.setHouseOwner(house.getNif());
-            houseBill.setFromDate(this.currentDate);
-            houseBill.setIssueDate(jumpTo);
+            houseBill.setStartDate(this.currentDate);
+            houseBill.setEmissionDate(jumpTo);
             houseBill.setTotalCost(house.calculateBill(daysDifference));
 
             bills.add(houseBill);

@@ -8,6 +8,12 @@ public class Bill {
     private LocalDate emissionDate;
     private LocalDate startDate;
 
+    private int numDevices;
+
+    private String HouseOwner;
+
+
+
     public Bill(Double totalCost, Double consumo, LocalDate emissionDate, LocalDate startDate) {
         this.totalCost = totalCost;
         this.consumo = consumo;
@@ -21,4 +27,29 @@ public class Bill {
         this.emissionDate = LocalDate.now();
         this.startDate = LocalDate.now();
     }
+
+    public void setTotalCost(Double totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public void setConsumo(Double consumo) {
+        this.consumo = consumo;
+    }
+
+    public void setEmissionDate(LocalDate emissionDate) {
+        this.emissionDate = emissionDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setNumDevices(int numDevices) {
+        this.numDevices = numDevices;
+    }
+
+    public void setHouseOwner(String houseOwner) {
+        HouseOwner = houseOwner;
+    }
+
 }
