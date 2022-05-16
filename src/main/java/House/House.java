@@ -98,6 +98,14 @@ public class House {
         return devices;
     }
 
+    public int getDevicesOn () {
+        int size = getDevices().values().size();
+        int r=0;
+        for (; 0<size;size--){
+        if(getDevices().values().contains(SmartDevice.State.ON)) r++;
+        }
+        return r;
+    }
 
     public Map<String,List<Integer>> getLocations(){
      Map<String,List<Integer>> locations = new HashMap<>(this.locations);
