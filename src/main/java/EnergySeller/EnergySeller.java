@@ -57,34 +57,37 @@ public class EnergySeller {
         return new EnergySeller(this);
     }
 
-    public double RandomTax(EnergySeller seller) {
+    public double RandomTax() {
         int r = new Random().nextInt(3);
         switch (r) {
             case 0:
-                this.tax = seller.tax + 0.06;
+                this.tax = tax + 0.06;
             case 1:
-                this.tax = seller.tax + 0.02;
+                this.tax = tax + 0.02;
             case 2:
-                this.tax = seller.tax + 0.04;
+                this.tax = tax + 0.04;
             default:
-                this.tax = seller.tax;
+                this.tax = tax;
         }
-        return seller.getTax();
+        return getTax();
     }
 
-    public double RandomPriceKw(EnergySeller seller) {
+    public double RandomPriceKw() {
         int r = new Random().nextInt(3);
         switch (r) {
             case 0:
-                this.priceKw = seller.priceKw + 0.07;
+                this.priceKw = priceKw + 0.07;
             case 1:
-                this.priceKw = seller.priceKw + 0.02;
+                this.priceKw = priceKw + 0.02;
             case 2:
-                this.priceKw = seller.priceKw + 0.04;
+                this.priceKw = priceKw + 0.04;
             default:
-                this.priceKw = seller.priceKw;
+                this.priceKw = priceKw;
         }
-        return seller.getPriceKw();
+        return getPriceKw();
     }
 
+    public void getFormula() {
+
+    }
 }

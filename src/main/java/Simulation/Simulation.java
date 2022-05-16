@@ -42,6 +42,8 @@ public class Simulation {
 
             bills.add(houseBill);
         }
+        return bills;
+    }
         /* Common Methods */
         @Override
         public String toString()
@@ -53,7 +55,7 @@ public class Simulation {
             {
                 result.append(e.getEnergySeller())
                         .append(" ")
-                        .append(e.getFormula())
+                        .append(e.RandomTax() + e.RandomPriceKw())
                         .append("\n");
             }
 
@@ -62,9 +64,11 @@ public class Simulation {
             {
                 result.append(h.getOwnerName()).append(" ").append(h.getNif())
                         .append(" ").append(h.getSeller()
-                                .getEnergySeller()).append(h.getSeller().getFormula()).append(" \n   Rooms:\n");
+                                .getEnergySeller()).append(h.getSeller().RandomPriceKw() + h.getSeller().RandomTax()).append(" \n   Rooms:\n");
 
                 }
+            return result.toString();
+        }
 /**
     public enum Free {
         On,
@@ -91,4 +95,5 @@ public class Simulation {
         return num * frac;
     }
 **/
-}
+    }
+

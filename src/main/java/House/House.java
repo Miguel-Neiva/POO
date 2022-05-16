@@ -218,6 +218,7 @@ public class House {
     }
 
     public double calculateBill(long days) {
-    this.
+        return this.getDevicesOn() * (getSeller().RandomPriceKw() + getSeller().RandomTax()) * (days*0.25);
     }
+
 }
