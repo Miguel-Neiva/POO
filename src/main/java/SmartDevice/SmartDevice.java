@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 
 public abstract class SmartDevice implements Comparable<SmartDevice>, Serializable {
-    private String id;
+    private int id;
     private State state;
 
 
@@ -19,7 +19,7 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
     /** O construtor vazio cria um Device (inútil) e sem informação. */
     public SmartDevice () {
         this.state = State.OFF;
-        this.id = "No Device given";
+        this.id = 0;
     }
 
 
@@ -28,8 +28,8 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
     }
     /** O construtor "Sub-Standard" cria um device (útil),
      * com toda a informação e inicia com o modo que lhe é passado. */
-    public SmartDevice (String id, State state) {
-        this.id = id;
+    public SmartDevice (int id, State state) {
+        this.id = 0;
         this.state = state;
     }
 
@@ -38,7 +38,7 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
         this.state= dev.getState();
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -62,7 +62,7 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
         if ((obj == null)) return false;
 
         SmartDevice p = (SmartDevice) obj;
-        return this.id.equals(p.getId()) && this.state.equals(p.getState());
+        return this.id == (p.getId()) && this.state.equals(p.getState());
     }
 
     @Override

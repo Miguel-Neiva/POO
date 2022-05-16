@@ -3,7 +3,7 @@ package View;
 public class View {
     public static void mainMenu() {
         StringBuilder sb = new StringBuilder("---------------Menu--------------");
-        sb.append("\n(1) - House");
+        sb.append("\n(1) - Houses");
         sb.append("\n(2) - Devices");
         sb.append("\n(3) - LoadDatabase");
         sb.append("\n(4) - SaveDatabase");
@@ -33,6 +33,20 @@ public class View {
 
     }
 
+    public static void askDatabase(int i) {
+        if (i == 1) {
+            System.out.println("Do you want to load our custom database or an external/Professor database?");
+            System.out.print("[custom/external] ");
+        } else if (i == 2) System.out.print("Is the file binary [y/n]: ");
+        else System.out.print("Write filepath: ");
 
+    }
+    /** Prints exceptions */
+    public static void exceptionPrinter(Exception e) {
+        System.out.println(e.getMessage());
+    }
+    public static void noDatabase() {
+        System.out.println("No Database loaded please load one.\n");
+    }
 
 }

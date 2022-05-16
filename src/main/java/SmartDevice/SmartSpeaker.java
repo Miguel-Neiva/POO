@@ -26,17 +26,23 @@ public class SmartSpeaker extends SmartDevice{
         this.SpeakerBrand = "";
     }
 
-    public SmartSpeaker(String id, State state, int volume, String channel, String speakerBrand) {
+    public SmartSpeaker(Integer id, State state, int volume, String channel, String speakerBrand,Double consumption) {
         super(id, state);
         this.volume = volume;
         this.channel = channel;
         this.SpeakerBrand = speakerBrand;
+        this.consumption= consumption;
     }
     public SmartSpeaker(SmartSpeaker dev) {
         super(dev);
         this.SpeakerBrand = dev.getSpeakerBrand();
         this.channel = dev.getChannel();
         this.volume = dev.getVolume();
+        this.consumption = dev.getConsumption();
+    }
+
+    public Double getConsumption() {
+        return consumption;
     }
 
     public void volumeUp() {

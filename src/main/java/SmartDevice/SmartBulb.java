@@ -8,7 +8,7 @@ public class SmartBulb extends SmartDevice{
     private Tonality ton;
 
 
-    enum Tonality {
+    public enum Tonality {
         Neutral,
         Warm,
         Cold
@@ -19,7 +19,7 @@ public class SmartBulb extends SmartDevice{
         this.consumption = 0;
         this.ton= Tonality.Neutral;
     }
-    public SmartBulb(String id, State state, Double dimension, double consumption, Tonality ton) {
+    public SmartBulb(int id, State state, Double dimension, double consumption, Tonality ton) {
         super();
         this.dimension = dimension;
         this.consumption = consumption;

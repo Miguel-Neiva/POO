@@ -10,8 +10,5 @@
         <module name="Project" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Database" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>
