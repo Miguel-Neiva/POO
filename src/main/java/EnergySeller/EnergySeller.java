@@ -1,14 +1,13 @@
 package EnergySeller;
 
 import SmartDevice.SmartDevice;
-import org.apache.groovy.util.concurrent.concurrentlinkedhashmap.EntryWeigher;
 
 import java.util.*;
 import java.util.random.RandomGenerator;
 
 public class EnergySeller {
     private String energySeller;
-    private Double priceKw; // -> EnergySeller and the price of the Kw
+    private Double priceKw=0.20; // -> EnergySeller and the price of the Kw
     Random rand = new Random();
 
     private Double tax=0.10;
@@ -31,37 +30,22 @@ public class EnergySeller {
 
     public EnergySeller(String energySeller) {
         this.energySeller = energySeller;
-        this.priceKw = sellerPrice();
-        this.tax=sellerTax();
+
     }
 
     public EnergySeller(EnergySeller seller) {
         this.energySeller = seller.getEnergySeller();
-        this.priceKw=seller.getPriceKw();
-        this.tax=seller.getTax();
+
     }
 
     public Double getTax() {
-        return tax;
+        return this.tax;
     }
 
     public Double getPriceKw() {
         return priceKw;
     }
 
-    public Double sellerPrice () {
-        Random price = new Random();
-        double number;
-        number= price.nextDouble(6);
-        return number;
-    }
-
-    public Double sellerTax () {
-        Random price = new Random();
-        double number;
-        number= price.nextDouble(3);
-        return number;
-    }
 
     public String getEnergySeller() {
         return energySeller;
@@ -74,6 +58,36 @@ public class EnergySeller {
 
     public EnergySeller clone() {
         return new EnergySeller(this);
+    }
+
+    public double RandomTax(EnergySeller seller) {
+        int r = new Random().nextInt(3);
+        switch (r) {
+            case 0:
+                this.tax=seller.tax + 0.06;
+            case 1:
+                this.tax=seller.tax + 0.02;
+            case 2:
+                this.tax=seller.tax + 0.04;
+            default:
+                this.tax=seller.tax;
+        }
+        return seller.getTax();
+    }
+
+    public double RandomPriceKw(EnergySeller seller) {
+        int r = new Random().nextInt(3);
+        switch (r) {
+            case 0:
+                this.priceKw=seller.priceKw+0.07;
+            case 1:
+                this.priceKw=seller.priceKw+0.02;
+            case 2:
+                this.priceKw=seller.priceKw+0.04;
+            default:
+                this.priceKw=seller.priceKw;
+        }
+        return seller.getPriceKw();
     }
 
 }
