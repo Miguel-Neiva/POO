@@ -77,9 +77,9 @@ public class SmartCamera extends SmartDevice{
         return 1;
     }
 
-    public int getConsumption(){
+    public double getConsumption(){
         // só uma ideia, funciona assim pq quanto maior for a res mais comsumo tem
-        return this.resolution.width *this.resolution.height * size;
+        return this.resolution.width *this.resolution.height * size*consumption;
     }
 
 }

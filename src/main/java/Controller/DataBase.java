@@ -66,6 +66,11 @@ public class DataBase implements Serializable {
         Map<Integer,SmartDevice> devices = null;
         String divName = null;
         int idCount = 1;
+
+        /* Random State */
+        Boolean state = new Random().nextBoolean();
+        SmartDevice.State s = state ? SmartDevice.State.ON : SmartDevice.State.OFF;
+
         while (readFile.hasNextLine()) {
             line = readFile.nextLine();
             String[] linhaPartida = line.split(":");
@@ -100,7 +105,7 @@ public class DataBase implements Serializable {
                     if(nextCommaBulb[2].equals("Neutral")) ton = SmartBulb.Tonality.Neutral;
                         else if(nextCommaBulb[2].equals("Cold")) ton = SmartBulb.Tonality.Cold;
                     else ton = SmartBulb.Tonality.Warm;
-                    devices.put(idCount,new SmartBulb(idCount,SmartDevice.State.OFF,Double.parseDouble(nextCommaBulb[1]), Double.parseDouble(nextCommaBulb[2]),ton));
+                    devices.put(idCount,new SmartBulb(idCount,s,Double.parseDouble(nextCommaBulb[1]), Double.parseDouble(nextCommaBulb[2]),ton));
                             idCount++;
                             break;
                 case "SmartCamera":
@@ -110,15 +115,15 @@ public class DataBase implements Serializable {
                     int cameraHeight = Integer.parseInt(cameraResolution[0].substring(1));
                     int cameraWidth = Integer.parseInt(cameraResolution[1].substring(0,cameraResolution[1].length()-1));
                     //System.out.println(cameraWidth);
-                    devices.put(idCount,new SmartCamera(idCount, SmartDevice.State.OFF, new SmartCamera.CameraResolution(cameraHeight,cameraWidth),Integer.parseInt(nextCommaCamera[1]),Double.parseDouble(nextCommaCamera[2])));
+                    devices.put(idCount,new SmartCamera(idCount,s, new SmartCamera.CameraResolution(cameraHeight,cameraWidth),Integer.parseInt(nextCommaCamera[1]),Double.parseDouble(nextCommaCamera[2])));
                     idCount++;
                     break;
                 case "SmartSpeaker" :
                     String[] nextCommaSpeaker = linhaPartida[1].split(",");
                     div.get(divName).add(idCount);
-                    //String marca = nextCommaSpeaker[1];
-                   // System.out.println(marca);
-                    devices.put(idCount, new SmartSpeaker(idCount,SmartDevice.State.OFF,Integer.parseInt(nextCommaSpeaker[0]),nextCommaSpeaker[1],nextCommaSpeaker[2],Double.parseDouble(nextCommaSpeaker[3])));
+                    String marca = nextCommaSpeaker[1];
+                    System.out.println(marca);
+                    devices.put(idCount, new SmartSpeaker(idCount,s,Integer.parseInt(nextCommaSpeaker[0]),nextCommaSpeaker[1],nextCommaSpeaker[2],Double.parseDouble(nextCommaSpeaker[3])));
                     idCount++;
                     }
 

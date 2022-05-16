@@ -42,7 +42,7 @@ public class SmartSpeaker extends SmartDevice{
     }
 
     public Double getConsumption() {
-        return consumption;
+        return volume*0.1*consumption;
     }
 
     public void volumeUp() {

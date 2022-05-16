@@ -98,13 +98,8 @@ public class House {
         return devices;
     }
 
-    public int getDevicesOn () {
-        int size = getDevices().values().size();
-        int r=0;
-        for (; 0<size;size--){
-        if(getDevices().values().contains(SmartDevice.State.ON)) r++;
-        }
-        return r;
+    public int getTotalDevices () {
+        return getDevices().values().size();
     }
 
     public Map<String,List<Integer>> getLocations(){
