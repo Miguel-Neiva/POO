@@ -224,7 +224,7 @@ public class House {
 
     public Double consumption(House house) throws HouseDoesNotExistException {
         int r=0;
-        for (Map.Entry<Integer, SmartDevice> entry : this.devices.entrySet()) {
+        for (Map.Entry<String, List<Integer>> entry : this.locations.entrySet()) {
             if(entry.getValue().getState().equals(SmartDevice.State.ON)){
             r = entry.getValue().
 
@@ -236,4 +236,7 @@ public class House {
 
 
 
+    public double calculateBill(long days) {
+        return this.getDevicesOn() * (getSeller().RandomPriceKw() + getSeller().RandomTax()) * (days * 0.25);
+    }
 }
