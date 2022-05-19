@@ -7,6 +7,7 @@ import java.util.Map;
 
 import EnergySeller.EnergySeller;
 import Exceptions.DeviceDoesNotExistException;
+import Exceptions.HouseDoesNotExistException;
 import SmartDevice.SmartDevice;
 
 /**
@@ -217,8 +218,22 @@ public class House {
         }
     }
 
-    public double calculateBill(long days) {
+    public double calculatePrice(long days) {
         return this.getDevicesOn() * (getSeller().RandomPriceKw() + getSeller().RandomTax()) * (days * 0.25);
     }
+
+    public Double consumption(House house) throws HouseDoesNotExistException {
+        int r=0;
+        for (Map.Entry<Integer, SmartDevice> entry : this.devices.entrySet()) {
+            if(entry.getValue().getState().equals(SmartDevice.State.ON)){
+            r = entry.getValue().
+
+            } else
+                throw new HouseDoesNotExistException("House does not exist");
+        }
+        return r;
+    }
+
+
 
 }

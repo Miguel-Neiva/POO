@@ -38,6 +38,7 @@ public class Simulation {
         this.currentDate = this.currentDate.plusDays(days);
     }
 
+
     /* Common Methods */
     @Override
     public String toString() {

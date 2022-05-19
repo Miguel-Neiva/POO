@@ -1,6 +1,8 @@
 package House;
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.chrono.ChronoLocalDate;
 
 public class Bill {
     private Double totalCost;
@@ -50,6 +52,7 @@ public class Bill {
     public void setHouseOwner(String houseOwner) {
         HouseOwner = houseOwner;
     }
+
 
     @Override
     public String toString() {
