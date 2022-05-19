@@ -55,7 +55,11 @@ public class Controller {
             switch (option) {
                 case 1:
                     View.printer(dataBase.housesTostring());
-                    ReaderWriter.pressEnterToContinue();
+                    String housename = ReaderWriter.getString("Please insert house owner's name: ");
+                    while (!dataBase.houseExists(housename)) {
+                        housename = ReaderWriter.getString("Please insert house owner's name: ");
+                    }
+                    Controller.houseController(housename);
                     break;
                 case 6:
                     long days = ReaderWriter.getLong("Please insert number of days:");
@@ -68,6 +72,19 @@ public class Controller {
                     System.exit(0);
                     break;
             }
+        }
+    }
+
+    public static void houseController(String houseName) {
+        View.MenuHouse();
+        int input = ReaderWriter.getInt("Please choose an option: ");
+        while (input != 6) {
+            if (input == 1) {
+            } else if (input == 2) {
+
+            }
+            View.MenuHouse();
+            input = ReaderWriter.getInt("Please choose an option: ");
         }
     }
 }

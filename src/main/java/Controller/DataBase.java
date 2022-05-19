@@ -175,6 +175,11 @@ public class DataBase implements Serializable {
         return new ArrayList<>(this.houses);
     }
 
+    /** Verifies if house exists */
+    public boolean houseExists(String ownerName) {
+        return houses.stream().anyMatch(x -> x.getOwnerName().equals(ownerName));
+    }
+
     public String housesTostring() {
         StringBuilder result = new StringBuilder();
         for (House house : this.houses) {

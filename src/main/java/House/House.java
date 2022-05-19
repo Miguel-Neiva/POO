@@ -205,7 +205,7 @@ public class House {
         }
     }
 
-    public void setOnOneDevice(String s) throws DeviceDoesNotExistException {
+    public void setOnOneDevice(int s) throws DeviceDoesNotExistException {
         for (Map.Entry<String, List<Integer>> entry : this.locations.entrySet()) {
             if (entry.getValue().contains(s)) {
                 // String dev = entry.getValue().stream().filter(d ->

@@ -3,13 +3,25 @@ package View;
 public class View {
     public static void mainMenu() {
         StringBuilder sb = new StringBuilder("---------------Menu--------------");
-        sb.append("\n(1) - Houses");
+        sb.append("\n(1) - Select a House");
         sb.append("\n(2) - Devices");
         sb.append("\n(3) - LoadDatabase");
         sb.append("\n(4) - SaveDatabase");
         sb.append("\n(5) - View database");
         sb.append("\n(6) - Simulate");
         sb.append("\n(7) - Quit");
+        System.out.println(sb);
+    }
+
+    /** Prints questions related to the House */
+    public static void MenuHouse() {
+        StringBuilder sb = new StringBuilder("---------------House Menu--------------");
+        sb.append("\n(1) - Add a device");
+        sb.append("\n(2) - Add a Room");
+        sb.append("\n(3) - Change House seller");
+        sb.append("\n(4) - Turn on Device");
+        sb.append("\n(5) - Turn off Device");
+        sb.append("\n(6) - Back");
         System.out.println(sb);
     }
 
