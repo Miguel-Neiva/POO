@@ -25,6 +25,16 @@ public class View {
         System.out.println(sb);
     }
 
+    public static void MenuSimulation(){
+        StringBuilder sb = new StringBuilder("---------------Simulation Menu--------------");
+        sb.append("\n(1) - Simulate one House");  // get Bill
+        sb.append("\n(2) - Simulate all Houses"); //get associated Bill
+        sb.append("\n(4) - House with most Consumption"); // Highest Bill
+        sb.append("\n(5) - Change energy seller");
+        sb.append("\n(6) - Back");
+        System.out.println(sb);
+    }
+
     /** Prints an object */
     public static void printer(Object o) {
         System.out.println(o);
