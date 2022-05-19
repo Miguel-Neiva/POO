@@ -1,60 +1,73 @@
 package Controller;
 
-import Exceptions.IncorrectLineException;
-import View.View;
-import org.junit.Test;
-
-import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+import Simulation.Simulation;
+import View.ReaderWriter;
+import View.View;
+
 public class Controller {
 
-        public static DataBase loadDatabase() {
-            DataBase dataBase = null;
-            Scanner User_input = new Scanner(System.in);
-            /*database load code */
-            View.askDatabase(1);
-            String dataAnswer = User_input.nextLine();
-            if(dataAnswer.equals("custom")) {
+    public static DataBase loadDatabase() {
+        DataBase dataBase = null;
+        Scanner user_input = new Scanner(System.in);
+        /* database load code */
+        View.askDatabase(1);
+        String dataAnswer = user_input.nextLine();
+        if (dataAnswer.equals("custom")) {
 
-                try {
-                    dataBase = new DataBase("database/CustomDatabase",true);
-                } catch (IOException | ClassNotFoundException e ) {
-                    View.exceptionPrinter(e);
-                }
+            try {
+                dataBase = new DataBase("database/CustomDatabase", true);
+            } catch (IOException | ClassNotFoundException e) {
+                View.exceptionPrinter(e);
+                dataBase = loadDatabase();
             }
-            else if(dataAnswer.equals("external")) {
-                View.askDatabase(2);
-                dataAnswer = User_input.nextLine();
-                boolean binary = dataAnswer.equals("y");
-                View.askDatabase(3);
-                String filepath = User_input.nextLine();
+        } else if (dataAnswer.equals("external")) {
+            View.askDatabase(2);
+            dataAnswer = user_input.nextLine();
+            boolean binary = dataAnswer.equals("y");
+            View.askDatabase(3);
+            String filepath = user_input.nextLine();
 
-                try {
-                    dataBase = new DataBase("database/" + filepath,binary);
-                } catch (IOException | ClassNotFoundException e) {
-                    View.exceptionPrinter(e);
-                }
+            try {
+                dataBase = new DataBase("database/" + filepath, binary);
+            } catch (IOException | ClassNotFoundException e) {
+                View.exceptionPrinter(e);
+                dataBase = loadDatabase();
             }
-            return dataBase;
+        } else {
+            dataBase = loadDatabase();
         }
+
+        return dataBase;
+    }
 
     public static void run() {
-        Scanner User_input = new Scanner(System.in);
-
+        Scanner user_input = new Scanner(System.in);
 
         DataBase dataBase = Controller.loadDatabase();
-
-        while(true) {
+        Simulation simulation = new Simulation(dataBase);
+        while (true) {
             View.mainMenu();
-            int option = User_input.nextInt();
+            View.chooseaOption();
+            int option = user_input.nextInt();
             switch (option) {
                 case 1:
-                    if (dataBase != null) {
-
-                    }
+                    View.printer(dataBase.housesTostring());
+                    ReaderWriter.pressEnterToContinue();
+                    break;
+                case 6:
+                    long days = ReaderWriter.getLong("Please insert number of days:");
+                    simulation.simulate(days);
+                    View.printer(simulation.toString());
+                    ReaderWriter.pressEnterToContinue();
+                    break;
+                case 7:
+                    user_input.close();
+                    System.exit(0);
+                    break;
             }
         }
-        }
+    }
 }

@@ -12,13 +12,12 @@ public class Bill {
 
     private String HouseOwner;
 
-
-
-    public Bill(Double totalCost, Double consumo, LocalDate emissionDate, LocalDate startDate) {
+    public Bill(Double totalCost, Double consumo, LocalDate emissionDate, LocalDate startDate, String HouseOwner) {
         this.totalCost = totalCost;
         this.consumo = consumo;
-        this.emissionDate =emissionDate;
+        this.emissionDate = emissionDate;
         this.startDate = startDate;
+        this.HouseOwner = HouseOwner;
     }
 
     public Bill() {
@@ -52,4 +51,14 @@ public class Bill {
         HouseOwner = houseOwner;
     }
 
+    @Override
+    public String toString() {
+
+        String result = "OwnerName : " + this.HouseOwner;
+        result += "\nTotal Cost: " + this.totalCost;
+        result += "\nTotal Consumption: " + this.consumo;
+        result += "\n" + this.startDate + "---" + this.emissionDate;
+        result += "\n------------------------------------------\n";
+        return result;
+    }
 }
