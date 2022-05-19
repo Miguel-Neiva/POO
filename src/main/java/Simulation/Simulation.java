@@ -1,99 +1,78 @@
 package Simulation;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import House.Bill;
+import java.util.ArrayList;
+import java.util.List;
 
-import EnergySeller.EnergySeller;
+import Controller.DataBase;
+import House.Bill;
 import House.House;
 
 public class Simulation {
     /* Class Variables */
-    private List<EnergySeller> sellers;
-    private Map<String,House> houses;
+    private DataBase database;
     private List<Bill> bills; // Structure with nif and respective houses;
-    LocalDate currentDate;
+    private LocalDate currentDate;
 
-    public Simulation (List<EnergySeller> providers, List<House> houses) {
-        this.sellers = new ArrayList<>();
-        for(EnergySeller e : providers) this.sellers.add(e.clone());
-        this.houses = new HashMap<>();
-        for(House h : houses) this.houses.put(h.getNif(), h.clone());
+    public Simulation(DataBase database) {
+        this.database = database;
+        this.bills = new ArrayList<>();
+        currentDate = LocalDate.now();
     }
 
     /* Getters/Setters */
 
     /* Class Methods */
-    public List<Bill> simulate( LocalDate jumpTo)
-    {
-        List<Bill> bills = new ArrayList<>();
-        long daysDifference = ChronoUnit.DAYS.between(this.currentDate, jumpTo);
+    public void simulate(long days) {
+        List<House> houses = database.getHouses();
+        // long daysDifference = ChronoUnit.DAYS.between(this.currentDate, jumpTo);
 
-        for (House house : houses.values())
-        {
-            Bill houseBill = new Bill();
+        for (House house : houses) {
 
-            houseBill.setNumDevices(house.getTotalDevices());
-            houseBill.setHouseOwner(house.getNif());
-            houseBill.setStartDate(this.currentDate);
-            houseBill.setEmissionDate(jumpTo);
-            houseBill.setTotalCost(house.calculateBill(daysDifference));
+            bills.add(
+                    new Bill(house.calculateBill(days), house.calculateBill(days), this.currentDate.plusDays(days),
+                            this.currentDate,
+                            house.getOwnerName()));
 
-            bills.add(houseBill);
         }
-        return bills;
+        this.currentDate = this.currentDate.plusDays(days);
     }
-        /* Common Methods */
-        @Override
-        public String toString()
-        {
-            StringBuilder result = new StringBuilder();
 
-            result.append("Providers: \n");
-            for (EnergySeller e : this.sellers)
-            {
-                result.append(e.getEnergySeller())
-                        .append(" ")
-                        .append(e.RandomTax() + e.RandomPriceKw())
-                        .append("\n");
-            }
+    /* Common Methods */
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
 
-            result.append("\nHouses:\n");
-            for (House h : this.houses.values())
-            {
-                result.append(h.getOwnerName()).append(" ").append(h.getNif())
-                        .append(" ").append(h.getSeller()
-                                .getEnergySeller()).append(h.getSeller().RandomPriceKw() + h.getSeller().RandomTax()).append(" \n   Rooms:\n");
-
-                }
-            return result.toString();
+        for (Bill bill : bills) {
+            result.append(bill.toString()).append("\n");
         }
-/**
-    public enum Free {
-        On,
-        Off
+        return result.toString();
     }
 
-    public void InitHouse(House house,EnergySeller seller){
-        Object[] devArray = house.getDevices().values().toArray();
-        int r = new Random().nextInt(10);
-        for(int i =0; i<r;i++ ){
-            house.setDeviceOn( (String) devArray[new Random().nextInt(devArray.length)]);
-        }
-        house.setSeller(seller);
-    }
-
-    public double Calc(House house,EnergySeller seller){
-
-        // falta o tempo
-
-        InitHouse(house, seller);
-        int num = house.getDevicesOn();
-        double frac = seller.RandomPriceKw(seller)*seller.RandomTax(seller);
-
-        return num * frac;
-    }
-**/
-    }
-
+    /**
+     * public enum Free {
+     * On,
+     * Off
+     * }
+     * 
+     * public void InitHouse(House house,EnergySeller seller){
+     * Object[] devArray = house.getDevices().values().toArray();
+     * int r = new Random().nextInt(10);
+     * for(int i =0; i<r;i++ ){
+     * house.setDeviceOn( (String) devArray[new Random().nextInt(devArray.length)]);
+     * }
+     * house.setSeller(seller);
+     * }
+     * 
+     * public double Calc(House house,EnergySeller seller){
+     * 
+     * // falta o tempo
+     * 
+     * InitHouse(house, seller);
+     * int num = house.getDevicesOn();
+     * double frac = seller.RandomPriceKw(seller)*seller.RandomTax(seller);
+     * 
+     * return num * frac;
+     * }
+     **/
+}
