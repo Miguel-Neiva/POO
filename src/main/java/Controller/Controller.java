@@ -3,7 +3,9 @@ package Controller;
 import java.io.IOException;
 import java.util.Scanner;
 
+import House.House;
 import Simulation.Simulation;
+import SmartDevice.SmartBulb;
 import View.ReaderWriter;
 import View.View;
 
@@ -59,13 +61,10 @@ public class Controller {
                     while (!dataBase.houseExists(housename)) {
                         housename = ReaderWriter.getString("Please insert house owner's name: ");
                     }
-                    Controller.houseController(housename);
+                    Controller.houseController(housename, dataBase);
                     break;
                 case 6:
-                    long days = ReaderWriter.getLong("Please insert number of days:");
-                    simulation.simulate(days);
-                    View.printer(simulation.toString());
-                    ReaderWriter.pressEnterToContinue();
+                    SimulationController(dataBase, simulation);
                     break;
                 case 7:
                     user_input.close();
@@ -75,15 +74,80 @@ public class Controller {
         }
     }
 
-    public static void houseController(String houseName) {
+    public static void houseController(String houseName, DataBase dataBase) {
         View.MenuHouse();
         int input = ReaderWriter.getInt("Please choose an option: ");
         while (input != 6) {
             if (input == 1) {
+                House house = dataBase.getHouse(houseName);
+                ReaderWriter.getString(house.getLocations().toString());
+                String room = ReaderWriter.getString("Please insert the room in wich you want to add the device: ");
+                while (!house.existsDevice(room)) {
+                    ReaderWriter.getString(house.getLocations().toString());
+                    room = ReaderWriter.getString("Please insert the room in wich you want to add the device: ");
+                }
+                // TODO: torna isto mais interessante com os varios tipos de smartdevice, ate
+                // podes(deves) criar um menu a parte
+                // String id = ReaderWriter.getString("Please insert smartdevice id");
+                dataBase.addDevice(houseName, new SmartBulb(), room);
             } else if (input == 2) {
+
+                String room = ReaderWriter.getString("Please inser room name: ");
+                dataBase.addRoom(houseName, room);
+            } else if (input == 3) {
+                ReaderWriter.printString(dataBase.sellersToString());
+                String seller = ReaderWriter.getString("Please insert seller name: ");
+                while (!dataBase.sellerExists(seller)) {
+                    seller = ReaderWriter.getString("Please insert seller name: ");
+                }
+                dataBase.changeSeller(houseName, seller);
+                ReaderWriter.printString("Seller Changed!");
+                ReaderWriter.pressEnterToContinue();
+            } else if (input == 4) {
+                dataBase.devicesToString(houseName);
+                int deviceId = ReaderWriter.getInt("Please insert device id:");
+                dataBase.setOnDevice(houseName, deviceId);
+
+            } else if (input == 5) {
+                dataBase.devicesToString(houseName);
+                int deviceIdOff = ReaderWriter.getInt("Please insert device id: ");
+                while (dataBase.deviceExists(houseName, deviceIdOff)) {
+                    deviceIdOff = ReaderWriter.getInt("Please insert device id: ");
+                }
+                dataBase.setOffDevice(houseName, deviceIdOff);
 
             }
             View.MenuHouse();
+            input = ReaderWriter.getInt("Please choose an option: ");
+        }
+    }
+
+    public static void SimulationController(DataBase dataBase, Simulation s) {
+        View.MenuSimulation();
+        int input = ReaderWriter.getInt("Please choose an option: ");
+        while (input != 6) {
+            if (input == 1) {
+                ReaderWriter.printString(dataBase.housesTostring());
+                String houseOwner = ReaderWriter.getString("Please insert house owner's name: ");
+                while (!dataBase.houseExists(houseOwner)) {
+                    houseOwner = ReaderWriter.getString("Please insert house owner's name: ");
+                }
+                long days = ReaderWriter.getLong("Please insert the days:");
+                s.simulateOne(days, houseOwner);
+            } else if (input == 2) {
+                long days = ReaderWriter.getLong("Please insert number of days:");
+                s.simulate(days);
+                View.printer(s.toString());
+                ReaderWriter.pressEnterToContinue();
+            } else if (input == 3) {
+                // TODO: nao percebi
+            } else if (input == 4) {
+
+                ReaderWriter.printString("-------------Bill with most consumption------------\n" + s.mostConsumption());
+                ReaderWriter.pressEnterToContinue();
+            }
+            // TODO: o 5 nao ta no menu da casa? tambem nao percebi
+            View.MenuSimulation();
             input = ReaderWriter.getInt("Please choose an option: ");
         }
     }

@@ -1,6 +1,6 @@
 package EnergySeller;
 
-import java.util.*;
+import java.util.Random;
 
 public class EnergySeller {
     private String energySeller;
@@ -8,7 +8,6 @@ public class EnergySeller {
     Random rand = new Random();
 
     private Double tax = 0.10;
-
 
     // Empty Constructor
     public EnergySeller() {
@@ -19,10 +18,9 @@ public class EnergySeller {
 
     @Override
     public String toString() {
-        return "EnergySeller{" +
-                "energySeller='" + energySeller + '\'' +
-                ", priceKw=" + priceKw + ", tax=" + tax +
-                '}';
+        return "------------------------EnergySeller---------------\n" +
+                "Name= " + energySeller + '\n' +
+                "priceKw=" + priceKw + ", tax=" + tax + "\n";
     }
 
     public EnergySeller(String energySeller) {
@@ -43,7 +41,6 @@ public class EnergySeller {
         return priceKw;
     }
 
-
     public String getEnergySeller() {
         return energySeller;
     }
@@ -51,7 +48,6 @@ public class EnergySeller {
     public void setEnergySeller(String energySeller) {
         this.energySeller = energySeller;
     }
-
 
     public EnergySeller clone() {
         return new EnergySeller(this);

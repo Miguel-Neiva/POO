@@ -35,8 +35,8 @@ public class House {
         // initialise instance variables
         this.ownerName = "";
         this.nif = "";
-        this.devices = new HashMap();
-        this.locations = new HashMap();
+        this.devices = new HashMap<>();
+        this.locations = new HashMap<>();
     }
 
     public House(String name, String nif, EnergySeller seller) {
@@ -44,8 +44,8 @@ public class House {
         this.ownerName = name;
         this.nif = nif;
         this.seller = new EnergySeller(seller);
-        this.devices = new HashMap();
-        this.locations = new HashMap();
+        this.devices = new HashMap<>();
+        this.locations = new HashMap<>();
     }
 
     public House(House c) {
@@ -87,8 +87,12 @@ public class House {
                 "nif= " + nif + "\n";
     }
 
-    public void setDeviceOn(String devCode) {
+    public void setDeviceOn(int devCode) {
         this.devices.get(devCode).setOn();
+    }
+
+    public void setDeviceOff(int devCode) {
+        this.devices.get(devCode).setOff();
     }
 
     public Map<Integer, SmartDevice> getDevices() {
@@ -234,7 +238,9 @@ public class House {
         return r;
     }
 
-
+    public boolean hasLocation(String location) {
+        return locations.containsKey(location);
+    }
 
     public double calculateBill(long days) {
         return this.getDevicesOn() * (getSeller().RandomPriceKw() + getSeller().RandomTax()) * (days * 0.25);

@@ -171,6 +171,7 @@ public class DataBase implements Serializable {
      * EnergySeller :: clone));
      * }
      */
+
     public List<House> getHouses() {
         return new ArrayList<>(this.houses);
     }
@@ -180,11 +181,119 @@ public class DataBase implements Serializable {
         return houses.stream().anyMatch(x -> x.getOwnerName().equals(ownerName));
     }
 
+    public boolean sellerExists(String sellerName) {
+        return sellers.stream().anyMatch(x -> x.getEnergySeller().equals(sellerName));
+    }
+
+    public boolean deviceExists(String houseName, int DeviceId) {
+        House house = null;
+        for (House h : this.houses) {
+            if (h.getOwnerName().equals(houseName)) {
+                house = new House(house);
+                break;
+            }
+        }
+        return house.getDevices().containsKey(DeviceId);
+    }
+
+    // TODO: especificar o device nao precisas de mexer nesta funcao so no
+    // controller fazeres melhor
+    public void addDevice(String houseOwner, SmartDevice s, String location) {
+        for (House house : this.houses) {
+            if (house.getOwnerName().equals(houseOwner)) {
+                house.addDevice(s);
+                house.addToRoom(location, s.getId());
+                break;
+            }
+        }
+    }
+
+    // Adds a room to the given house
+    public void addRoom(String houseOwner, String room) {
+        for (House house : this.houses) {
+            if (house.getOwnerName().equals(houseOwner)) {
+                house.addRoom(room);
+                break;
+            }
+        }
+
+    }
+
+    public void changeSeller(String houseOwner, String sellerName) {
+        EnergySeller newSeller = null;
+        for (EnergySeller seller : sellers) {
+            if (seller.getEnergySeller().equals(sellerName)) {
+                newSeller = seller;
+                break;
+            }
+        }
+        for (House house : this.houses) {
+            if (house.getOwnerName().equals(houseOwner)) {
+                house.setSeller(newSeller);
+                break;
+            }
+        }
+    }
+
+    public House getHouse(String houseOwner) {
+        House house = null;
+        for (House h : this.houses) {
+            if (h.getOwnerName().equals(houseOwner)) {
+                house = new House(house);
+                break;
+            }
+        }
+        return house;
+    }
+
+    public void setOnDevice(String houseName, int id) {
+        House house = null;
+        for (House h : this.houses) {
+            if (h.getOwnerName().equals(houseName)) {
+                house = h;
+            }
+        }
+        house.setDeviceOn(id);
+    }
+
+    public void setOffDevice(String houseName, int id) {
+        House house = null;
+        for (House h : this.houses) {
+            if (h.getOwnerName().equals(houseName)) {
+                house = h;
+            }
+        }
+        house.setDeviceOff(id);
+    }
+
     public String housesTostring() {
         StringBuilder result = new StringBuilder();
         for (House house : this.houses) {
             result.append(house.toString());
         }
         return result.toString();
+    }
+
+    public String sellersToString() {
+        StringBuilder result = new StringBuilder();
+        for (EnergySeller seller : sellers) {
+            result.append(seller.toString()).append("\n");
+        }
+        return result.toString();
+    }
+
+    public String devicesToString(String houseName) {
+        House newhouse = null;
+        for (House house : this.houses) {
+            if (house.getOwnerName().equals(houseName)) {
+                newhouse = house;
+            }
+        }
+        StringBuilder result = new StringBuilder();
+        for (SmartDevice device : newhouse.getDevices().values()) {
+            result.append(device.toString()).append("\n");
+        }
+        return result.toString();
+
     }
 }

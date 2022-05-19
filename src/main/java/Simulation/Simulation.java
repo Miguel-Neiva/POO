@@ -32,12 +32,33 @@ public class Simulation {
             bills.add(
                     new Bill(house.calculateBill(days), house.calculateBill(days), this.currentDate.plusDays(days),
                             this.currentDate,
-                            house.getOwnerName()));
+                            house.getOwnerName(), days));
 
         }
         this.currentDate = this.currentDate.plusDays(days);
     }
 
+    public void simulateOne(long days, String houseOwner) {
+        House house = database.getHouse(houseOwner);
+        bills.add(
+                new Bill(house.calculateBill(days), house.calculateBill(days), this.currentDate.plusDays(days),
+                        this.currentDate,
+                        house.getOwnerName(), days));
+    }
+
+    public String mostConsumption() {
+        double result = -1.0;
+        Bill b = null;
+        for (Bill bill : this.bills) {
+            if (bill.getConsumption() > result) {
+                b = bill;
+                result = bill.getConsumption();
+            }
+        }
+        if (b == null)
+            return "Simulation not done yet!";
+        return b.toString();
+    }
 
     /* Common Methods */
     @Override

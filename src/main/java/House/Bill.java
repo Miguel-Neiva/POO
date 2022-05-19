@@ -1,25 +1,26 @@
 package House;
 
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.chrono.ChronoLocalDate;
 
 public class Bill {
     private Double totalCost;
     private Double consumo;
     private LocalDate emissionDate;
     private LocalDate startDate;
+    private long period;
 
     private int numDevices;
 
     private String HouseOwner;
 
-    public Bill(Double totalCost, Double consumo, LocalDate emissionDate, LocalDate startDate, String HouseOwner) {
+    public Bill(Double totalCost, Double consumo, LocalDate emissionDate, LocalDate startDate, String HouseOwner,
+            long period) {
         this.totalCost = totalCost;
         this.consumo = consumo;
         this.emissionDate = emissionDate;
         this.startDate = startDate;
         this.HouseOwner = HouseOwner;
+        this.period = period;
     }
 
     public Bill() {
@@ -53,6 +54,9 @@ public class Bill {
         HouseOwner = houseOwner;
     }
 
+    public double getConsumption() {
+        return this.consumo;
+    }
 
     @Override
     public String toString() {
@@ -61,6 +65,7 @@ public class Bill {
         result += "\nTotal Cost: " + this.totalCost;
         result += "\nTotal Consumption: " + this.consumo;
         result += "\n" + this.startDate + "---" + this.emissionDate;
+        result += "\nPeriod: " + this.period + " Days";
         result += "\n------------------------------------------\n";
         return result;
     }
