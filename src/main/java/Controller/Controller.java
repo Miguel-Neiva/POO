@@ -3,11 +3,8 @@ package Controller;
 import java.io.IOException;
 import java.util.Scanner;
 
-import Exceptions.HouseDoesNotExistException;
 import House.House;
 import Simulation.Simulation;
-import SmartDevice.SmartBulb;
-import SmartDevice.SmartSpeaker;
 import View.ReaderWriter;
 import View.View;
 
@@ -65,6 +62,9 @@ public class Controller {
                     }
                     Controller.houseController(housename, dataBase);
                     break;
+                case 3:
+                    dataBase = Controller.loadDatabase();
+                    break;
                 case 6:
                     SimulationController(dataBase, simulation);
                     break;
@@ -84,13 +84,13 @@ public class Controller {
                 House house = dataBase.getHouse(houseName);
                 ReaderWriter.printString(house.getLocations().toString());
                 String room = ReaderWriter.getString("Please insert the room in wich you want to add the device: ");
-                    while (!house.hasRoom(room)) {
+                while (!house.hasRoom(room)) {
                     ReaderWriter.getString(house.getLocations().toString());
                     room = ReaderWriter.getString("Please insert the room in wich you want to add the device: ");
-                    Controller.deviceController(room,dataBase);
+                    Controller.deviceController(room, dataBase);
                 }
                 // String id = ReaderWriter.getString("Please insert smartdevice id");
-                Controller.deviceController(room,dataBase);
+                Controller.deviceController(room, dataBase);
             } else if (input == 2) {
                 String room = ReaderWriter.getString("Please insert room name: ");
                 dataBase.addRoom(houseName, room);
@@ -125,18 +125,22 @@ public class Controller {
     public static void deviceController(String room, DataBase dataBase) {
         View.MenuDevices();
         int input = ReaderWriter.getInt("Please choose an option: ");
-        while(input != 4) {
-            if(input == 1){
-                String dev = ReaderWriter.getString("Please select the Volume,Channel,Speakerbrand,Consumption as the following example\n");
+        while (input != 4) {
+            if (input == 1) {
+                /**
+                 * TODO: para teres os id so tens que fazer dataBase.getidCount() e dps tens
+                 * que dar um dataBase.setidCount(idcount + 1) para somar um ao anterior
+                 */
+                String dev = ReaderWriter.getString(
+                        "Please select the Volume,Channel,Speakerbrand,Consumption as the following example\n");
                 System.out.println("40,RFM,Marshall,4.91");
-                //SmartSpeaker dev = new SmartSpeaker()
+                // SmartSpeaker dev = new SmartSpeaker()
             }
         }
 
-
     }
 
-    public static void SimulationController(DataBase dataBase, Simulation s){
+    public static void SimulationController(DataBase dataBase, Simulation s) {
         View.MenuSimulation();
         int input = ReaderWriter.getInt("Please choose an option: ");
         while (input != 6) {

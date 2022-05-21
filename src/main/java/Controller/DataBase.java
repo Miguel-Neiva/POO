@@ -11,7 +11,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 import EnergySeller.EnergySeller;
-import Exceptions.HouseDoesNotExistException;
 import House.House;
 import SmartDevice.SmartBulb;
 import SmartDevice.SmartCamera;
@@ -19,8 +18,9 @@ import SmartDevice.SmartDevice;
 import SmartDevice.SmartSpeaker;
 
 public class DataBase implements Serializable {
-    List<House> houses;
-    List<EnergySeller> sellers;
+    private List<House> houses;
+    private List<EnergySeller> sellers;
+    private int idCount;
     // Constructors
 
     /**
@@ -75,7 +75,7 @@ public class DataBase implements Serializable {
         Map<String, List<Integer>> div = null;
         Map<Integer, SmartDevice> devices = null;
         String divName = null;
-        int idCount = 1;
+        this.idCount = 1;
 
         /* Random State */
         Boolean state = new Random().nextBoolean();
@@ -178,7 +178,7 @@ public class DataBase implements Serializable {
     }
 
     /** Verifies if house exists */
-    public boolean houseExists(String ownerName){
+    public boolean houseExists(String ownerName) {
         return houses.stream().anyMatch(x -> x.getOwnerName().equals(ownerName));
     }
 
@@ -236,6 +236,14 @@ public class DataBase implements Serializable {
         }
     }
 
+    public int getidCount() {
+        return this.idCount;
+    }
+
+    public void setidCount(int idCount) {
+        this.idCount = idCount;
+    }
+
     public House getHouse(String houseOwner) {
         House house = null;
         for (House h : this.houses) {
@@ -247,7 +255,7 @@ public class DataBase implements Serializable {
         return house;
     }
 
-    public String getRoom (String Room,String houseOwner) {
+    public String getRoom(String Room, String houseOwner) {
         House house = null;
         for (House h : this.houses) {
             if (h.getLocations().containsKey(Room)) {
@@ -256,7 +264,6 @@ public class DataBase implements Serializable {
         }
         return Room;
     }
-
 
     public void setOnDevice(String houseName, int id) {
         House house = null;
