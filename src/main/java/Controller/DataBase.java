@@ -3,6 +3,7 @@ package Controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,10 +79,10 @@ public class DataBase implements Serializable {
         this.idCount = 1;
 
         /* Random State */
-        Boolean state = new Random().nextBoolean();
-        SmartDevice.State s = state ? SmartDevice.State.ON : SmartDevice.State.OFF;
 
         while (readFile.hasNextLine()) {
+            boolean state = new Random().nextBoolean();
+            SmartDevice.State s = state ? SmartDevice.State.ON : SmartDevice.State.OFF;
             line = readFile.nextLine();
             String[] linhaPartida = line.split(":");
             // System.out.println(linhaPartida[0]);
@@ -113,12 +114,10 @@ public class DataBase implements Serializable {
                     String[] nextCommaBulb = linhaPartida[1].split(",");
                     div.get(divName).add(idCount);
                     SmartBulb.Tonality ton;
-                    if (nextCommaBulb[2].equals("Neutral"))
-                        ton = SmartBulb.Tonality.Neutral;
-                    else if (nextCommaBulb[2].equals("Cold"))
-                        ton = SmartBulb.Tonality.Cold;
-                    else
-                        ton = SmartBulb.Tonality.Warm;
+                    if (nextCommaBulb[0].equals("Neutral")) ton = SmartBulb.Tonality.Neutral;
+                    else if (nextCommaBulb[0].equals("Cold")) ton = SmartBulb.Tonality.Cold;
+                    else ton = SmartBulb.Tonality.Warm;
+
                     devices.put(idCount, new SmartBulb(idCount, s, Integer.parseInt(nextCommaBulb[1]),
                             Double.parseDouble(nextCommaBulb[2]), ton));
                     idCount++;
@@ -208,8 +207,6 @@ public class DataBase implements Serializable {
         return house.hasRoom(room);
     }
 
-    // TODO: especificar o device nao precisas de mexer nesta funcao so no
-    // controller fazeres melhor
     public void addDevice(String houseOwner, SmartDevice s, String location) {
         for (House house : this.houses) {
             if (house.getOwnerName().equals(houseOwner)) {
@@ -296,6 +293,25 @@ public class DataBase implements Serializable {
         house.setAllOff(room);
     }
 
+    public boolean existDevice(String houseName, int id) {
+        House house = null;
+        for (House h : this.houses) {
+            if (h.getOwnerName().equals(houseName)) {
+                house = h;
+            }
+        }
+        return house.existDev(id);
+    }
+    public void removeDev(String houseName,int id) {
+        House house = null;
+        for (House h : this.houses) {
+            if (h.getOwnerName().equals(houseName)) {
+                house = h;
+            }
+        }
+        assert house != null;
+        house.removeDevice(id);
+    }
     public void setOffDevice(String houseName, int id) {
         House house = null;
         for (House h : this.houses) {
@@ -337,3 +353,4 @@ public class DataBase implements Serializable {
 
     }
 }
+

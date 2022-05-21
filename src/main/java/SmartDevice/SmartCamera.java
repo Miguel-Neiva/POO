@@ -24,7 +24,7 @@ public class SmartCamera extends SmartDevice{
     }
 
     public SmartCamera (SmartCamera dev) {
-        super(dev.toString());
+        super(dev);
         this.resolution =dev.getResolution();
         this.size = dev.getSize();
         this.consumption = dev.getConsumption();
@@ -60,12 +60,13 @@ public class SmartCamera extends SmartDevice{
         return size == that.size && Objects.equals(resolution, that.resolution);
     }
 
-    @Override
     public String toString() {
-        return "SmartCamera{" +
-                "resolution=" + resolution +
-                ", size=" + size +
-                '}';
+        StringBuilder sb = new StringBuilder("SmartCamera { ");
+        sb.append(super.toString());
+        sb.append(" Resolution -> " ).append(this.resolution).append(",");
+        sb.append(" Size -> ").append(size).append(",");
+        sb.append(" Consumption -> ").append(consumption).append(" }");
+        return sb.toString();
     }
     @Override
     public SmartCamera clone () {
@@ -79,8 +80,8 @@ public class SmartCamera extends SmartDevice{
 
     public double getConsumption(){
         // só uma ideia, funciona assim pq quanto maior for a res mais comsumo tem
-        return this.resolution.width *this.resolution.height * size*consumption;
+        if(this.getState() == State.ON) return this.resolution.width *this.resolution.height * size*consumption;
+        else return 0.0;
     }
 
 }
-

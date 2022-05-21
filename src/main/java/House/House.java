@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import SmartDevice.*;
 import EnergySeller.EnergySeller;
 import Exceptions.DeviceDoesNotExistException;
 import SmartDevice.SmartDevice;
@@ -217,9 +218,24 @@ public class House {
                 // d.equals(s)).findAny().orElse(null);
                 this.devices.get(s).setOff();
                 break;
-            } else
+            } }
                 throw new DeviceDoesNotExistException("Device does not exist");
+
+    }
+
+    public void removeDevice (int s) {
+        for (Map.Entry<String, List<Integer>> entry : this.locations.entrySet()) {
+            if(entry.getValue().contains(s)) {
+                this.devices.remove(entry,s);
+            }
         }
+    }
+
+    public boolean existDev (int id) {
+        for (Map.Entry<String, List<Integer>> entry : this.locations.entrySet()) {
+            if (entry.getValue().contains(id)) return true;
+            }
+        return false;
     }
 
     public void setOnOneDevice(int s) throws DeviceDoesNotExistException {
@@ -238,19 +254,22 @@ public class House {
         return this.getDevicesOn() * (getSeller().RandomPriceKw() + getSeller().RandomTax()) * (days * 0.25);
     }
 
-    /*
-     * public Double consumption(House house) throws HouseDoesNotExistException {
-     * int r=0;
-     * for (Map.Entry<String, List<Integer>> entry : this.locations.entrySet()) {
-     * if(entry.getValue().().equals(SmartDevice.State.ON)){
-     * r = entry.getValue().
-     * 
-     * } else
-     * throw new HouseDoesNotExistException("House does not exist");
-     * }
-     * return r;
-     * }
-     */
+/*
+    public Double consumptionDev(House house)  {
+      int r=0;
+      for (Map.Entry<String, List<Integer>> entry : this.locations.entrySet()) {
+          for(Map.Entry<Integer,SmartDevice> ent : this.devices.entrySet()) {
+              ent.getValue().;
+          }
+        Double nd = SmartDevice.SmartBulb.
+          }
+      }
+
+      public Double classConsumption(SmartDevice dev) {
+        if (dev instanceof SmartBulb) return SmartBulb.c
+      }
+*/
+
     public boolean hasLocation(String location) {
         return locations.containsKey(location);
     }

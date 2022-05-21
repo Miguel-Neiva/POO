@@ -12,7 +12,8 @@ public class SmartSpeaker extends SmartDevice{
 
     private int volume;
     private String channel;
-    private String SpeakerBrand;
+
+    private String speakerBrand;
     private Double consumption;
 
     /**
@@ -23,26 +24,27 @@ public class SmartSpeaker extends SmartDevice{
         super();
         this.volume = 0;
         this.channel = "";
-        this.SpeakerBrand = "";
+        this.speakerBrand = "";
     }
 
     public SmartSpeaker(Integer id, State state, int volume, String channel, String speakerBrand,Double consumption) {
         super(id, state);
         this.volume = volume;
         this.channel = channel;
-        this.SpeakerBrand = speakerBrand;
+        this.speakerBrand = speakerBrand;
         this.consumption= consumption;
     }
     public SmartSpeaker(SmartSpeaker dev) {
         super(dev);
-        this.SpeakerBrand = dev.getSpeakerBrand();
+        this.speakerBrand = dev.getSpeakerBrand();
         this.channel = dev.getChannel();
         this.volume = dev.getVolume();
         this.consumption = dev.getConsumption();
     }
 
     public Double getConsumption() {
-        return volume*0.1*consumption;
+        if(this.getState() == State.ON) return volume*0.1*consumption;
+        else return 0.0;
     }
 
     public void volumeUp() {
@@ -60,11 +62,13 @@ public class SmartSpeaker extends SmartDevice{
 
     @Override
     public String toString() {
-        return "SmartSpeaker{" +
-                "volume=" + volume +
-                ", channel='" + channel + '\'' +
-                ", SpeakerBrand='" + SpeakerBrand + '\'' +
-                '}';
+        StringBuilder sb = new StringBuilder("SmartSpeaker {");
+        sb.append(super.toString());
+        sb.append(" Volume -> ").append(this.volume).append(",");
+        sb.append(" Channel -> ").append(this.channel).append(",");
+        sb.append(" SpeakerBrand -> ").append(this.speakerBrand).append(",");
+        sb.append(" Consumption -> ").append(this.consumption).append(" }");
+        return sb.toString();
     }
 
     public String getChannel()
@@ -72,7 +76,7 @@ public class SmartSpeaker extends SmartDevice{
         return this.channel;
     }
     public String getSpeakerBrand(){
-        return this.SpeakerBrand;
+        return this.speakerBrand;
     }
 
     public void setChannel(String c)

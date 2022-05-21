@@ -14,12 +14,11 @@ public class SmartBulb extends SmartDevice {
     public SmartBulb() {
         super();
         this.consumption = 0;
-        this.consumption = 0;
         this.ton = Tonality.Neutral;
     }
 
     public SmartBulb(int id, State state, int dimension, double consumption, Tonality ton) {
-        super();
+        super(id,state);
         this.dimension = dimension;
         this.consumption = consumption;
         this.ton = ton;
@@ -46,12 +45,15 @@ public class SmartBulb extends SmartDevice {
 
     public double getConsumption() {
 
-        if (getTon() == Tonality.Neutral)
-            return 0.5 * consumption;
-        else if (getTon() == Tonality.Cold)
-            return 0.1 * consumption;
-        else
-            return consumption;
+        if (this.getState() == State.ON) {
+            if (getTon() == Tonality.Neutral)
+                return 0.5 * consumption;
+            else if (getTon() == Tonality.Cold)
+                return 0.1 * consumption;
+            else
+                return consumption;
+        }
+        else return 0;
     }
 
     @Override
@@ -79,11 +81,12 @@ public class SmartBulb extends SmartDevice {
 
     @Override
     public String toString() {
-        return "SmartBulb{" +
-                " dimension='" + getDimension() + "'" +
-                ", consumption='" + getConsumption() + "'" +
-                ", ton='" + getTon() + "'" +
-                "}";
+        StringBuilder sb = new StringBuilder("SmartBulb {");
+        sb.append(super.toString());
+        sb.append(" Tonality -> ").append(this.ton).append(",");
+        sb.append(" Dimension -> ").append(this.dimension).append(",");
+        sb.append(" Consumption -> ").append(this.consumption).append(" }");
+        return sb.toString();
     }
 
 }

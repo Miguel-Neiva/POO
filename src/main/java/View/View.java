@@ -4,7 +4,7 @@ public class View {
     public static void mainMenu() {
         StringBuilder sb = new StringBuilder("---------------Menu--------------");
         sb.append("\n(1) - Select a House");
-        sb.append("\n(2) - Devices");
+        sb.append("\n(2) - See Sellers");
         sb.append("\n(3) - LoadDatabase");
         sb.append("\n(4) - SaveDatabase");
         sb.append("\n(5) - View database");
@@ -24,7 +24,8 @@ public class View {
         sb.append("\n(6) - Turn on all devices of a Room");
         sb.append("\n(7) - Turn off all devices of a Room");
         sb.append("\n(8) - See devices");
-        sb.append("\n(9) - Back");
+        sb.append("\n(9) - Remove a device");
+        sb.append("\n(10) - Back");
         System.out.println(sb);
     }
 
@@ -44,7 +45,6 @@ public class View {
         sb.append("\n(1) - add SmartSpeaker");  // get Bill
         sb.append("\n(2) - add SmartBulb"); //get associated Bill
         sb.append("\n(3) - add SmartCamera");
-        sb.append("\n(4) - Back");
         System.out.println(sb);
     }
 

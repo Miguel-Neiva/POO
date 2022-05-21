@@ -4,12 +4,12 @@ package SmartDevice;
 import House.House;
 
 import java.io.Serializable;
+import java.util.Random;
 
 
 public abstract class SmartDevice implements Comparable<SmartDevice>, Serializable {
     private int id;
     private State state;
-
 
     public enum State {
         OFF,
@@ -21,8 +21,6 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
         this.state = State.OFF;
         this.id = 0;
     }
-
-
     public SmartDevice (String id) {
         this.state = State.OFF;
     }
@@ -64,13 +62,12 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
         SmartDevice p = (SmartDevice) obj;
         return this.id == (p.getId()) && this.state.equals(p.getState());
     }
-
     @Override
     public String toString() {
-        return "SmartDevice{" +
-                "id='" + id + '\'' +
-                ", state=" + state +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append(" Id -> ").append(this.id).append(",");
+        sb.append(" State -> ").append(this.state).append(",");
+        return sb.toString();
     }
 
     /** The number that represents a position */

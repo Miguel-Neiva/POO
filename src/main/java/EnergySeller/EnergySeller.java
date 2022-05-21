@@ -83,7 +83,4 @@ public class EnergySeller {
         return getPriceKw();
     }
 
-    public void getFormula() {
-
-    }
 }
