@@ -121,19 +121,4 @@ public class ReaderWriter {
         return r;
     }
 
-    // Reads nextline and checks if it as a date format.
-    public static String getDate(String str) {
-        String date;
-        try {
-            System.out.println(str);
-            date = scin.nextLine();
-            LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
-
-        } catch (Exception e) {
-            System.out.println("Wrong Format!");
-            date = getDate(str);
-        }
-        return date;
-
-    }
 }

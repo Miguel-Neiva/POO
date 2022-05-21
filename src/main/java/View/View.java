@@ -36,6 +36,15 @@ public class View {
         System.out.println(sb);
     }
 
+    public static void MenuDevices(){
+        StringBuilder sb = new StringBuilder("---------------Devices Menu--------------");
+        sb.append("\n(1) - add SmartSpeaker");  // get Bill
+        sb.append("\n(2) - add SmartBulb"); //get associated Bill
+        sb.append("\n(3) - add SmartCamera");
+        sb.append("\n(4) - Back");
+        System.out.println(sb);
+    }
+
     /** Prints an object */
     public static void printer(Object o) {
         System.out.println(o);

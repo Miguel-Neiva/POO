@@ -8,6 +8,7 @@ import java.util.Map;
 import EnergySeller.EnergySeller;
 import Exceptions.DeviceDoesNotExistException;
 import Exceptions.HouseDoesNotExistException;
+import Exceptions.RoomDoesNotExistException;
 import SmartDevice.SmartDevice;
 
 /**
@@ -131,6 +132,12 @@ public class House {
         }
     }
 
+    public void addDeviceRoom (String room,Integer id,SmartDevice dev) throws RoomDoesNotExistException {
+        if  (! this.locations.containsKey(id)) throw new RoomDoesNotExistException("Room not founded");
+        this.locations.get(room).add(id);
+        this.devices.put(id,dev);
+    }
+
     public void setDevices(Map<Integer, SmartDevice> loc) {
         this.devices = new HashMap<>();
         for (Map.Entry<Integer, SmartDevice> dev : loc.entrySet()) {
@@ -226,7 +233,7 @@ public class House {
         return this.getDevicesOn() * (getSeller().RandomPriceKw() + getSeller().RandomTax()) * (days * 0.25);
     }
 
-    public Double consumption(House house) throws HouseDoesNotExistException {
+    /*public Double consumption(House house) throws HouseDoesNotExistException {
         int r=0;
         for (Map.Entry<String, List<Integer>> entry : this.locations.entrySet()) {
             if(entry.getValue().().equals(SmartDevice.State.ON)){
@@ -237,7 +244,7 @@ public class House {
         }
         return r;
     }
-
+*/
     public boolean hasLocation(String location) {
         return locations.containsKey(location);
     }

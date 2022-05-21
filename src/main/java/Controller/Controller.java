@@ -3,9 +3,11 @@ package Controller;
 import java.io.IOException;
 import java.util.Scanner;
 
+import Exceptions.HouseDoesNotExistException;
 import House.House;
 import Simulation.Simulation;
 import SmartDevice.SmartBulb;
+import SmartDevice.SmartSpeaker;
 import View.ReaderWriter;
 import View.View;
 
@@ -80,19 +82,17 @@ public class Controller {
         while (input != 6) {
             if (input == 1) {
                 House house = dataBase.getHouse(houseName);
-                ReaderWriter.getString(house.getLocations().toString());
+                ReaderWriter.printString(house.getLocations().toString());
                 String room = ReaderWriter.getString("Please insert the room in wich you want to add the device: ");
-                while (!house.existsDevice(room)) {
+                    while (!house.hasRoom(room)) {
                     ReaderWriter.getString(house.getLocations().toString());
                     room = ReaderWriter.getString("Please insert the room in wich you want to add the device: ");
+                    Controller.deviceController(room,dataBase);
                 }
-                // TODO: torna isto mais interessante com os varios tipos de smartdevice, ate
-                // podes(deves) criar um menu a parte
                 // String id = ReaderWriter.getString("Please insert smartdevice id");
-                dataBase.addDevice(houseName, new SmartBulb(), room);
+                Controller.deviceController(room,dataBase);
             } else if (input == 2) {
-
-                String room = ReaderWriter.getString("Please inser room name: ");
+                String room = ReaderWriter.getString("Please insert room name: ");
                 dataBase.addRoom(houseName, room);
             } else if (input == 3) {
                 ReaderWriter.printString(dataBase.sellersToString());
@@ -122,7 +122,21 @@ public class Controller {
         }
     }
 
-    public static void SimulationController(DataBase dataBase, Simulation s) {
+    public static void deviceController(String room, DataBase dataBase) {
+        View.MenuDevices();
+        int input = ReaderWriter.getInt("Please choose an option: ");
+        while(input != 4) {
+            if(input == 1){
+                String dev = ReaderWriter.getString("Please select the Volume,Channel,Speakerbrand,Consumption as the following example\n");
+                System.out.println("40,RFM,Marshall,4.91");
+                //SmartSpeaker dev = new SmartSpeaker()
+            }
+        }
+
+
+    }
+
+    public static void SimulationController(DataBase dataBase, Simulation s){
         View.MenuSimulation();
         int input = ReaderWriter.getInt("Please choose an option: ");
         while (input != 6) {

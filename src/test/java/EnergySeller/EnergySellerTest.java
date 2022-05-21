@@ -5,7 +5,6 @@ import Exceptions.RoomDoesNotExistException;
 import House.House;
 import SmartDevice.SmartDevice;
 import SmartDevice.SmartSpeaker;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

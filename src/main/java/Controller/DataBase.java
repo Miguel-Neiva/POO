@@ -11,6 +11,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import EnergySeller.EnergySeller;
+import Exceptions.HouseDoesNotExistException;
 import House.House;
 import SmartDevice.SmartBulb;
 import SmartDevice.SmartCamera;
@@ -177,7 +178,7 @@ public class DataBase implements Serializable {
     }
 
     /** Verifies if house exists */
-    public boolean houseExists(String ownerName) {
+    public boolean houseExists(String ownerName){
         return houses.stream().anyMatch(x -> x.getOwnerName().equals(ownerName));
     }
 
@@ -239,12 +240,23 @@ public class DataBase implements Serializable {
         House house = null;
         for (House h : this.houses) {
             if (h.getOwnerName().equals(houseOwner)) {
-                house = new House(house);
+                house = new House(h);
                 break;
             }
         }
         return house;
     }
+
+    public String getRoom (String Room,String houseOwner) {
+        House house = null;
+        for (House h : this.houses) {
+            if (h.getLocations().containsKey(Room)) {
+                house = new House(h);
+            }
+        }
+        return Room;
+    }
+
 
     public void setOnDevice(String houseName, int id) {
         House house = null;
