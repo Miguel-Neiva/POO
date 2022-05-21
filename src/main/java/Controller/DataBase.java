@@ -190,17 +190,18 @@ public class DataBase implements Serializable {
         House house = null;
         for (House h : this.houses) {
             if (h.getOwnerName().equals(houseName)) {
-                house = new House(house);
+                house = new House(h);
                 break;
             }
         }
         return house.getDevices().containsKey(DeviceId);
     }
+
     public boolean roomExists(String houseName, String room) {
         House house = null;
         for (House h : this.houses) {
             if (h.getOwnerName().equals(houseName)) {
-                house = new House(house);
+                house = new House(h);
                 break;
             }
         }
@@ -228,7 +229,8 @@ public class DataBase implements Serializable {
             }
         }
     }
-        // changes seller
+
+    // changes seller
     public void changeSeller(String houseOwner, String sellerName) {
         EnergySeller newSeller = null;
         for (EnergySeller seller : sellers) {
@@ -264,7 +266,6 @@ public class DataBase implements Serializable {
         return house;
     }
 
-
     public void setOnDevice(String houseName, int id) {
         House house = null;
         for (House h : this.houses) {
@@ -275,7 +276,7 @@ public class DataBase implements Serializable {
         house.setDeviceOn(id);
     }
 
-    public void setOnAll(String houseName,String room) {
+    public void setOnAll(String houseName, String room) {
         House house = null;
         for (House h : this.houses) {
             if (h.getOwnerName().equals(houseName)) {
@@ -285,7 +286,7 @@ public class DataBase implements Serializable {
         house.setAllOn(room);
     }
 
-    public void setOffAll(String houseName,String room) {
+    public void setOffAll(String houseName, String room) {
         House house = null;
         for (House h : this.houses) {
             if (h.getOwnerName().equals(houseName)) {

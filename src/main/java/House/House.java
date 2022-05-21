@@ -7,8 +7,6 @@ import java.util.Map;
 
 import EnergySeller.EnergySeller;
 import Exceptions.DeviceDoesNotExistException;
-import Exceptions.HouseDoesNotExistException;
-import Exceptions.RoomDoesNotExistException;
 import SmartDevice.SmartDevice;
 
 /**
@@ -132,9 +130,9 @@ public class House {
         }
     }
 
-    public void addDeviceRoom (String room,Integer id,SmartDevice dev) {
+    public void addDeviceRoom(String room, Integer id, SmartDevice dev) {
         this.locations.get(room).add(id);
-        this.devices.put(id,dev);
+        this.devices.put(id, dev);
     }
 
     public void setDevices(Map<Integer, SmartDevice> loc) {
@@ -176,6 +174,7 @@ public class House {
                 dev.setOn();
         }
     }
+
     public void setAllOff(String roomId) {
         for (Integer deviceId : this.locations.get(roomId)) {
             SmartDevice dev = this.devices.get(deviceId);
@@ -239,23 +238,33 @@ public class House {
         return this.getDevicesOn() * (getSeller().RandomPriceKw() + getSeller().RandomTax()) * (days * 0.25);
     }
 
-    /*public Double consumption(House house) throws HouseDoesNotExistException {
-        int r=0;
-        for (Map.Entry<String, List<Integer>> entry : this.locations.entrySet()) {
-            if(entry.getValue().().equals(SmartDevice.State.ON)){
-            r = entry.getValue().
-
-            } else
-                throw new HouseDoesNotExistException("House does not exist");
-        }
-        return r;
-    }
-*/
+    /*
+     * public Double consumption(House house) throws HouseDoesNotExistException {
+     * int r=0;
+     * for (Map.Entry<String, List<Integer>> entry : this.locations.entrySet()) {
+     * if(entry.getValue().().equals(SmartDevice.State.ON)){
+     * r = entry.getValue().
+     * 
+     * } else
+     * throw new HouseDoesNotExistException("House does not exist");
+     * }
+     * return r;
+     * }
+     */
     public boolean hasLocation(String location) {
         return locations.containsKey(location);
     }
 
     public double calculateBill(long days) {
         return this.getDevicesOn() * (getSeller().RandomPriceKw() + getSeller().RandomTax()) * (days * 0.25);
+    }
+
+    public String roomDevicesToString(String room) {
+        StringBuilder result = new StringBuilder();
+        result.append("---------------" + room + "----------------\n");
+        for (int db : this.locations.get(room)) {
+            result.append(devices.get(db).toString()).append("\n");
+        }
+        return result.toString();
     }
 }
