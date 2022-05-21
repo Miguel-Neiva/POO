@@ -227,7 +227,6 @@ public class DataBase implements Serializable {
                 break;
             }
         }
-
     }
         // changes seller
     public void changeSeller(String houseOwner, String sellerName) {

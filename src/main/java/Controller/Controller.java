@@ -79,10 +79,10 @@ public class Controller {
 
     public static void houseController(String houseName, DataBase dataBase) {
         View.MenuHouse();
-        House house = dataBase.getHouse(houseName);
         int input = ReaderWriter.getInt("Please choose an option: ");
         while (input != 6) {
             if (input == 1) {
+                House house = dataBase.getHouse(houseName);
                 ReaderWriter.printString(house.getLocations().toString());
                 String room = ReaderWriter.getString("Please insert the room in wich you want to add the device: ");
                     while (!house.hasRoom(room)) {
@@ -129,8 +129,10 @@ public class Controller {
                     room = ReaderWriter.getString("Please insert the room: ");
                 }
                 dataBase.setOffAll(houseName,room);
-            } else if (input == 8) {
-
+            } else if (input == 8) {/*
+                SmartDevice dev = dataBase.getSmartDevice(houseName);
+                ReaderWriter.printString();
+                */
             }
             View.MenuHouse();
             input = ReaderWriter.getInt("Please choose an option: ");
@@ -161,7 +163,7 @@ public class Controller {
             else ton = SmartBulb.Tonality.Cold;
             dev = new SmartBulb(dataBase.getidCount(),state2,Integer.parseInt(linhaPartida2[1]),Double.parseDouble(linhaPartida2[2]),ton);
         }
-        if(input == 2) {
+        if(input == 3) {
             String str3 = ReaderWriter.getString("Please select the Resolution,size and Consumption as the following example:  \nSmartCamera:(1024x768),83,7.14");
             String[] linhaPartida3 = str3.split(",");
             String[] cameraResolution = linhaPartida3[0].split("x");
