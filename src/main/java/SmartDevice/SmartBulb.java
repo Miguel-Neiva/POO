@@ -43,7 +43,7 @@ public class SmartBulb extends SmartDevice {
         this.ton = ton;
     }
 
-    public double getConsumption() {
+    public Double getConsumption() {
 
         if (this.getState() == State.ON) {
             if (getTon() == Tonality.Neutral)
@@ -53,7 +53,7 @@ public class SmartBulb extends SmartDevice {
             else
                 return consumption;
         }
-        else return 0;
+        else return 0.0;
     }
 
     @Override

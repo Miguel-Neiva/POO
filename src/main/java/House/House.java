@@ -68,8 +68,8 @@ public class House {
             Map<String, List<Integer>> locations) {
         this.ownerName = ownerName;
         this.nif = nif;
-        this.devices = devices;
-        this.locations = locations;
+        this.devices = new HashMap<>(devices);
+        this.locations = new HashMap<>(locations);
     }
 
     public void setOwnerName(String ownerName) {
@@ -120,20 +120,17 @@ public class House {
     }
 
     public Map<String, List<Integer>> getLocations() {
-        Map<String, List<Integer>> locations = new HashMap<>(this.locations);
-        return locations;
+        return new HashMap<>(this.locations);
     }
 
     public void setLocations(Map<String, List<Integer>> loc) {
         this.locations = new HashMap<>();
-        for (Map.Entry<String, List<Integer>> dev : loc.entrySet()) {
-            this.locations.put(dev.getKey(), dev.getValue());
-        }
+        this.locations.putAll(loc);
     }
 
     public void addDeviceRoom(String room, Integer id, SmartDevice dev) {
         this.locations.get(room).add(id);
-        this.devices.put(id, dev);
+        this.devices.put(id,dev);
     }
 
     public void setDevices(Map<Integer, SmartDevice> loc) {
@@ -155,18 +152,12 @@ public class House {
         this.nif = nif;
     }
 
-    public boolean existsDevice(String id) {
-        return this.devices.containsKey(id);
-    }
 
     public void addDevice(SmartDevice s) {
         this.devices.put(s.getId(), s);
     }
 
     /** Function that receives a Id and gives the device **/
-    public SmartDevice getDeviceById(String s) {
-        return this.devices.get(s);
-    }
 
     public void setAllOn(String roomId) {
         for (Integer deviceId : this.locations.get(roomId)) {
@@ -181,13 +172,6 @@ public class House {
             SmartDevice dev = this.devices.get(deviceId);
             if (dev != null)
                 dev.setOff();
-        }
-    }
-
-    /** Turns every device in this house on **/
-    public void setAllOn() {
-        for (Map.Entry<Integer, SmartDevice> device : this.devices.entrySet()) {
-            device.getValue().setOn();
         }
     }
 
@@ -206,10 +190,6 @@ public class House {
         location.add(s2);
     }
 
-    public boolean roomHasDevice(String s1, int s2) {
-        List<Integer> location = this.locations.get(s1);
-        return location.contains(s2);
-    }
 
     public void setOffOneDevice(int s) throws DeviceDoesNotExistException {
         for (Map.Entry<String, List<Integer>> entry : this.locations.entrySet()) {
@@ -223,10 +203,11 @@ public class House {
 
     }
 
-    public void removeDevice (int s) {
+    public void removeDevice (Integer s) {
         for (Map.Entry<String, List<Integer>> entry : this.locations.entrySet()) {
             if(entry.getValue().contains(s)) {
-                this.devices.remove(entry,s);
+                this.devices.remove(s);
+                entry.getValue().remove(s);
             }
         }
     }
@@ -238,41 +219,18 @@ public class House {
         return false;
     }
 
-    public void setOnOneDevice(int s) throws DeviceDoesNotExistException {
+
+    public Double consumptionDev() {
+        Double r = 0.0;
         for (Map.Entry<String, List<Integer>> entry : this.locations.entrySet()) {
-            if (entry.getValue().contains(s)) {
-                // String dev = entry.getValue().stream().filter(d ->
-                // d.equals(s)).findAny().orElse(null);
-                this.devices.get(s).setOff();
-                break;
-            } else
-                throw new DeviceDoesNotExistException("Device does not exist");
+            for (Integer ent : entry.getValue()) {
+                r += this.devices.get(ent).getConsumption();
+            }
+
         }
+        return r;
     }
 
-    public double calculatePrice(long days) {
-        return this.getDevicesOn() * (getSeller().RandomPriceKw() + getSeller().RandomTax()) * (days * 0.25);
-    }
-
-/*
-    public Double consumptionDev(House house)  {
-      int r=0;
-      for (Map.Entry<String, List<Integer>> entry : this.locations.entrySet()) {
-          for(Map.Entry<Integer,SmartDevice> ent : this.devices.entrySet()) {
-              ent.getValue().;
-          }
-        Double nd = SmartDevice.SmartBulb.
-          }
-      }
-
-      public Double classConsumption(SmartDevice dev) {
-        if (dev instanceof SmartBulb) return SmartBulb.c
-      }
-*/
-
-    public boolean hasLocation(String location) {
-        return locations.containsKey(location);
-    }
 
     public double calculateBill(long days) {
         return this.getDevicesOn() * (getSeller().RandomPriceKw() + getSeller().RandomTax()) * (days * 0.25);
@@ -281,8 +239,9 @@ public class House {
     public String roomDevicesToString(String room) {
         StringBuilder result = new StringBuilder();
         result.append("---------------" + room + "----------------\n");
-        for (int db : this.locations.get(room)) {
-            result.append(devices.get(db).toString()).append("\n");
+        for (Integer db : this.locations.get(room)) {
+            if(devices.get(db) != null) result.append(devices.get(db).toString()).append("\n");
+            else System.out.println(db);
         }
         return result.toString();
     }

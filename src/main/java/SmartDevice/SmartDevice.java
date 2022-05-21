@@ -74,6 +74,9 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
     public abstract Integer representedBy();
     public abstract SmartDevice clone();
 
+    public Double getConsumption() {
+        return 0.0;
+    }
     public int compareTo(SmartDevice otherDevices) {
         return Integer.compare(representedBy(), otherDevices.representedBy());
     }

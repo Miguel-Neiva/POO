@@ -346,6 +346,7 @@ public class DataBase implements Serializable {
             }
         }
         StringBuilder result = new StringBuilder();
+        assert newhouse != null;
         for (SmartDevice device : newhouse.getDevices().values()) {
             result.append(device.toString()).append("\n");
         }

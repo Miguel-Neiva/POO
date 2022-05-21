@@ -15,7 +15,7 @@ import View.View;
 public class Controller {
 
     public static DataBase loadDatabase() {
-        DataBase dataBase = null;
+        DataBase dataBase;
         Scanner user_input = new Scanner(System.in);
         /* database load code */
         View.askDatabase(1);
@@ -73,6 +73,7 @@ public class Controller {
                     break;
                 case 5:
                     View.printer(dataBase.housesTostring());
+                    ReaderWriter.pressEnterToContinue();
                     break;
                 case 6:
                     SimulationController(dataBase, simulation);
@@ -88,19 +89,19 @@ public class Controller {
     public static void houseController(String houseName, DataBase dataBase) {
         View.MenuHouse();
         int input = ReaderWriter.getInt("Please choose an option: ");
+        House house = dataBase.getHouse(houseName);
         while (input != 10) {
             if (input == 1) {
-                House house = dataBase.getHouse(houseName);
                 ReaderWriter.printString(house.getLocations().toString());
                 String room = ReaderWriter.getString("Please insert the room in wich you want to add the device: ");
                 while (!house.hasRoom(room)) {
                     ReaderWriter.getString(house.getLocations().toString());
                     room = ReaderWriter.getString("Please insert the room in wich you want to add the device: ");
                 }
-                // String id = ReaderWriter.getString("Please insert smartdevice id");
                 SmartDevice dev = Controller.deviceController(dataBase);
                 house.addDeviceRoom(room, dev.getId(), dev);
                 ReaderWriter.printString("Device was given with the following id:" + dev.getId());
+                ReaderWriter.pressEnterToContinue();
             } else if (input == 2) {
                 String room = ReaderWriter.getString("Please insert room name: ");
                 dataBase.addRoom(houseName, room);
@@ -135,7 +136,6 @@ public class Controller {
                 }
                 dataBase.setOffAll(houseName, room);
             } else if (input == 8) {
-                House house = dataBase.getHouse(houseName);
                 ReaderWriter.printString(house.getLocations().toString());
                 String room = ReaderWriter.getString("Please insert the room: ");
                 while (!dataBase.roomExists(houseName, room)) {
@@ -145,13 +145,15 @@ public class Controller {
                 ReaderWriter.printString(house.roomDevicesToString(room));
                 ReaderWriter.pressEnterToContinue();
             } else if (input == 9) {
-                House house = dataBase.getHouse(houseName);
+                //House house = dataBase.getHouse(houseName);
+                ReaderWriter.printString(house.getLocations().toString());
                 int id = ReaderWriter.getInt("Please insert the id of the SmartDevice you want to remove: ");
                 while(!dataBase.existDevice(houseName,id)) {
                     ReaderWriter.getInt("Please insert the id of the SmartDevice you want to remove: ");
                 }
                 dataBase.removeDev(houseName,id);
             }
+
             View.MenuHouse();
             input = ReaderWriter.getInt("Please choose an option: ");
         }
@@ -169,7 +171,6 @@ public class Controller {
                 SmartDevice.State state = nome == 1 ? SmartDevice.State.ON : SmartDevice.State.OFF;
                 dev = new SmartSpeaker(dataBase.getidCount(), state, Integer.parseInt(linhaPartida[0]), linhaPartida[1],
                         linhaPartida[2], Double.parseDouble(linhaPartida[3]));
-                // SmartSpeaker dev = new SmartSpeaker()
                 dataBase.setidCount(dataBase.getidCount() + 1);
             }
             if (input == 2) {
@@ -218,20 +219,20 @@ public class Controller {
                 }
                 long days = ReaderWriter.getLong("Please insert the days:");
                 s.simulateOne(days, houseOwner);
+                ReaderWriter.printString(s.toString());
+                ReaderWriter.pressEnterToContinue();
+                break;
             } else if (input == 2) {
                 long days = ReaderWriter.getLong("Please insert number of days:");
                 s.simulate(days);
                 View.printer(s.toString());
                 ReaderWriter.pressEnterToContinue();
             } else if (input == 3) {
-                // TODO: nao percebi
-            } else if (input == 4) {
 
                 ReaderWriter.printString("-------------Bill with most consumption------------\n" + s.mostConsumption());
                 ReaderWriter.pressEnterToContinue();
-            }
-            // TODO: o 5 nao ta no menu da casa? tambem nao percebi
-            View.MenuSimulation();
+            } else
+            View.mainMenu();
             input = ReaderWriter.getInt("Please choose an option: ");
         }
     }

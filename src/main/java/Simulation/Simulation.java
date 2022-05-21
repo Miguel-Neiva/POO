@@ -30,7 +30,7 @@ public class Simulation {
         for (House house : houses) {
 
             bills.add(
-                    new Bill(house.calculateBill(days), house.calculateBill(days), this.currentDate.plusDays(days),
+                    new Bill(house.calculateBill(days), house.consumptionDev(), this.currentDate.plusDays(days),
                             this.currentDate,
                             house.getOwnerName(), days));
 
@@ -41,7 +41,7 @@ public class Simulation {
     public void simulateOne(long days, String houseOwner) {
         House house = database.getHouse(houseOwner);
         bills.add(
-                new Bill(house.calculateBill(days), house.calculateBill(days), this.currentDate.plusDays(days),
+                new Bill(house.calculateBill(days), house.consumptionDev(), this.currentDate.plusDays(days),
                         this.currentDate,
                         house.getOwnerName(), days));
     }
@@ -71,30 +71,4 @@ public class Simulation {
         return result.toString();
     }
 
-    /**
-     * public enum Free {
-     * On,
-     * Off
-     * }
-     * 
-     * public void InitHouse(House house,EnergySeller seller){
-     * Object[] devArray = house.getDevices().values().toArray();
-     * int r = new Random().nextInt(10);
-     * for(int i =0; i<r;i++ ){
-     * house.setDeviceOn( (String) devArray[new Random().nextInt(devArray.length)]);
-     * }
-     * house.setSeller(seller);
-     * }
-     * 
-     * public double Calc(House house,EnergySeller seller){
-     * 
-     * // falta o tempo
-     * 
-     * InitHouse(house, seller);
-     * int num = house.getDevicesOn();
-     * double frac = seller.RandomPriceKw(seller)*seller.RandomTax(seller);
-     * 
-     * return num * frac;
-     * }
-     **/
 }
