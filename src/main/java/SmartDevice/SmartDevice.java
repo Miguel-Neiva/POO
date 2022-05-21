@@ -29,7 +29,7 @@ public abstract class SmartDevice implements Comparable<SmartDevice>, Serializab
     /** O construtor "Sub-Standard" cria um device (útil),
      * com toda a informação e inicia com o modo que lhe é passado. */
     public SmartDevice (int id, State state) {
-        this.id = 0;
+        this.id = id;
         this.state = state;
     }
 

@@ -18,10 +18,13 @@ public class View {
         StringBuilder sb = new StringBuilder("---------------House Menu--------------");
         sb.append("\n(1) - Add a device");
         sb.append("\n(2) - Add a Room");
-        sb.append("\n(3) - Change House seller");
-        sb.append("\n(4) - Turn on Device");
-        sb.append("\n(5) - Turn off Device");
-        sb.append("\n(6) - Back");
+        sb.append("\n(3) - Change Seller");
+        sb.append("\n(4) - Turn on one Device");
+        sb.append("\n(5) - Turn off one Device");
+        sb.append("\n(6) - Turn on all devices of a Room");
+        sb.append("\n(7) - Turn off all devices of a Room");
+        sb.append("\n(8) - See devices");
+        sb.append("\n(9) - Back");
         System.out.println(sb);
     }
 

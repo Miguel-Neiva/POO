@@ -19,7 +19,7 @@ public class SmartBulb extends SmartDevice{
         this.consumption = 0;
         this.ton= Tonality.Neutral;
     }
-    public SmartBulb(int id, State state, Double dimension, double consumption, Tonality ton) {
+    public SmartBulb(int id, State state, int dimension, double consumption, Tonality ton) {
         super();
         this.dimension = dimension;
         this.consumption = consumption;

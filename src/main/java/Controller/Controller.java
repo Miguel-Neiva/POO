@@ -3,8 +3,10 @@ package Controller;
 import java.io.IOException;
 import java.util.Scanner;
 
+import Exceptions.HouseDoesNotExistException;
 import House.House;
 import Simulation.Simulation;
+import SmartDevice.*;
 import View.ReaderWriter;
 import View.View;
 
@@ -62,9 +64,8 @@ public class Controller {
                     }
                     Controller.houseController(housename, dataBase);
                     break;
-                case 3:
-                    dataBase = Controller.loadDatabase();
-                    break;
+                case 3: loadDatabase();
+                case 5: View.printer(dataBase.housesTostring());
                 case 6:
                     SimulationController(dataBase, simulation);
                     break;
@@ -78,19 +79,20 @@ public class Controller {
 
     public static void houseController(String houseName, DataBase dataBase) {
         View.MenuHouse();
+        House house = dataBase.getHouse(houseName);
         int input = ReaderWriter.getInt("Please choose an option: ");
         while (input != 6) {
             if (input == 1) {
-                House house = dataBase.getHouse(houseName);
                 ReaderWriter.printString(house.getLocations().toString());
                 String room = ReaderWriter.getString("Please insert the room in wich you want to add the device: ");
-                while (!house.hasRoom(room)) {
+                    while (!house.hasRoom(room)) {
                     ReaderWriter.getString(house.getLocations().toString());
                     room = ReaderWriter.getString("Please insert the room in wich you want to add the device: ");
-                    Controller.deviceController(room, dataBase);
                 }
                 // String id = ReaderWriter.getString("Please insert smartdevice id");
-                Controller.deviceController(room, dataBase);
+                SmartDevice dev = Controller.deviceController(dataBase);
+                    house.addDeviceRoom(room,dev.getId(),dev);
+                ReaderWriter.printString("Device was given with the following id:"+ dev.getId());
             } else if (input == 2) {
                 String room = ReaderWriter.getString("Please insert room name: ");
                 dataBase.addRoom(houseName, room);
@@ -115,6 +117,19 @@ public class Controller {
                     deviceIdOff = ReaderWriter.getInt("Please insert device id: ");
                 }
                 dataBase.setOffDevice(houseName, deviceIdOff);
+            } else if (input == 6) {
+                String room = ReaderWriter.getString("Please insert the room: ");
+                while(dataBase.roomExists(houseName,room)) {
+                    room = ReaderWriter.getString("Please insert the room: ");
+            }
+                dataBase.setOnAll(houseName,room);
+            } else if (input == 7) {
+                String room = ReaderWriter.getString("Please insert the room: ");
+                while(dataBase.roomExists(houseName,room)) {
+                    room = ReaderWriter.getString("Please insert the room: ");
+                }
+                dataBase.setOffAll(houseName,room);
+            } else if (input == 8) {
 
             }
             View.MenuHouse();
@@ -122,25 +137,47 @@ public class Controller {
         }
     }
 
-    public static void deviceController(String room, DataBase dataBase) {
+    public static SmartDevice deviceController(DataBase dataBase) {
         View.MenuDevices();
         int input = ReaderWriter.getInt("Please choose an option: ");
-        while (input != 4) {
-            if (input == 1) {
-                /**
-                 * TODO: para teres os id so tens que fazer dataBase.getidCount() e dps tens
-                 * que dar um dataBase.setidCount(idcount + 1) para somar um ao anterior
-                 */
-                String dev = ReaderWriter.getString(
-                        "Please select the Volume,Channel,Speakerbrand,Consumption as the following example\n");
-                System.out.println("40,RFM,Marshall,4.91");
-                // SmartSpeaker dev = new SmartSpeaker()
+        SmartDevice dev = null;
+            if(input == 1){
+                String str = ReaderWriter.getString("Please select the Volume,Channel,Speakerbrand and Consumption as the following example: \n40,RFM,Marshall,4.91 \n");
+                String[] linhaPartida = str.split(",");
+                int nome = ReaderWriter.getInt("How do you want to inicialize de device?\n1-On\n2-Off");
+                SmartDevice.State state = nome == 1 ? SmartDevice.State.ON : SmartDevice.State.OFF;
+                 dev = new SmartSpeaker(dataBase.getidCount(),state,Integer.parseInt(linhaPartida[0]),linhaPartida[1],linhaPartida[2],Double.parseDouble(linhaPartida[3]));
+                //SmartSpeaker dev = new SmartSpeaker()
+                dataBase.setidCount(dataBase.getidCount()+1);
             }
+        if(input == 2) {
+            String str2 = ReaderWriter.getString("Please select the tonality(Neutral,Warm,Cold),dimension and Consumption as the following example: \nNeutral,8,0.16");
+            String[] linhaPartida2 = str2.split(",");
+            int nome2 = ReaderWriter.getInt("How do you want to inicialize de device?\n1-On\n2-Off");
+            SmartDevice.State state2 = nome2 == 1 ? SmartDevice.State.ON : SmartDevice.State.OFF;
+            SmartBulb.Tonality ton;
+            if(linhaPartida2[0].equals("Neutral")) ton = SmartBulb.Tonality.Neutral;
+            else if (linhaPartida2[0].equals("Warm")) ton = SmartBulb.Tonality.Warm;
+            else ton = SmartBulb.Tonality.Cold;
+            dev = new SmartBulb(dataBase.getidCount(),state2,Integer.parseInt(linhaPartida2[1]),Double.parseDouble(linhaPartida2[2]),ton);
         }
+        if(input == 2) {
+            String str3 = ReaderWriter.getString("Please select the Resolution,size and Consumption as the following example:  \nSmartCamera:(1024x768),83,7.14");
+            String[] linhaPartida3 = str3.split(",");
+            String[] cameraResolution = linhaPartida3[0].split("x");
+            int cameraHeight = Integer.parseInt(cameraResolution[0].substring(1));
+            int cameraWidth = Integer
+                    .parseInt(cameraResolution[1].substring(0, cameraResolution[1].length() - 1));
+            int nome3 = ReaderWriter.getInt("How do you want to inicialize de device\n1-On\n2-Off");
+            SmartDevice.State state3 = nome3 == 1 ? SmartDevice.State.ON : SmartDevice.State.OFF;
+            dev = new SmartCamera(dataBase.getidCount(),state3, new SmartCamera.CameraResolution(cameraHeight,cameraWidth),Integer.parseInt(linhaPartida3[1]),Double.parseDouble(linhaPartida3[2]));
+        }
+        return dev;
+
 
     }
 
-    public static void SimulationController(DataBase dataBase, Simulation s) {
+    public static void SimulationController(DataBase dataBase, Simulation s){
         View.MenuSimulation();
         int input = ReaderWriter.getInt("Please choose an option: ");
         while (input != 6) {

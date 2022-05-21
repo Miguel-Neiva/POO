@@ -132,8 +132,7 @@ public class House {
         }
     }
 
-    public void addDeviceRoom (String room,Integer id,SmartDevice dev) throws RoomDoesNotExistException {
-        if  (! this.locations.containsKey(id)) throw new RoomDoesNotExistException("Room not founded");
+    public void addDeviceRoom (String room,Integer id,SmartDevice dev) {
         this.locations.get(room).add(id);
         this.devices.put(id,dev);
     }
@@ -175,6 +174,13 @@ public class House {
             SmartDevice dev = this.devices.get(deviceId);
             if (dev != null)
                 dev.setOn();
+        }
+    }
+    public void setAllOff(String roomId) {
+        for (Integer deviceId : this.locations.get(roomId)) {
+            SmartDevice dev = this.devices.get(deviceId);
+            if (dev != null)
+                dev.setOff();
         }
     }
 

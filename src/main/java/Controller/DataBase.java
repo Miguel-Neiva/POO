@@ -119,7 +119,7 @@ public class DataBase implements Serializable {
                         ton = SmartBulb.Tonality.Cold;
                     else
                         ton = SmartBulb.Tonality.Warm;
-                    devices.put(idCount, new SmartBulb(idCount, s, Double.parseDouble(nextCommaBulb[1]),
+                    devices.put(idCount, new SmartBulb(idCount, s, Integer.parseInt(nextCommaBulb[1]),
                             Double.parseDouble(nextCommaBulb[2]), ton));
                     idCount++;
                     break;
@@ -196,6 +196,16 @@ public class DataBase implements Serializable {
         }
         return house.getDevices().containsKey(DeviceId);
     }
+    public boolean roomExists(String houseName, String room) {
+        House house = null;
+        for (House h : this.houses) {
+            if (h.getOwnerName().equals(houseName)) {
+                house = new House(house);
+                break;
+            }
+        }
+        return house.hasRoom(room);
+    }
 
     // TODO: especificar o device nao precisas de mexer nesta funcao so no
     // controller fazeres melhor
@@ -219,7 +229,7 @@ public class DataBase implements Serializable {
         }
 
     }
-
+        // changes seller
     public void changeSeller(String houseOwner, String sellerName) {
         EnergySeller newSeller = null;
         for (EnergySeller seller : sellers) {
@@ -255,15 +265,6 @@ public class DataBase implements Serializable {
         return house;
     }
 
-    public String getRoom(String Room, String houseOwner) {
-        House house = null;
-        for (House h : this.houses) {
-            if (h.getLocations().containsKey(Room)) {
-                house = new House(h);
-            }
-        }
-        return Room;
-    }
 
     public void setOnDevice(String houseName, int id) {
         House house = null;
@@ -273,6 +274,26 @@ public class DataBase implements Serializable {
             }
         }
         house.setDeviceOn(id);
+    }
+
+    public void setOnAll(String houseName,String room) {
+        House house = null;
+        for (House h : this.houses) {
+            if (h.getOwnerName().equals(houseName)) {
+                house = h;
+            }
+        }
+        house.setAllOn(room);
+    }
+
+    public void setOffAll(String houseName,String room) {
+        House house = null;
+        for (House h : this.houses) {
+            if (h.getOwnerName().equals(houseName)) {
+                house = h;
+            }
+        }
+        house.setAllOff(room);
     }
 
     public void setOffDevice(String houseName, int id) {
