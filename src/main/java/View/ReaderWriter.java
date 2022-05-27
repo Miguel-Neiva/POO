@@ -19,7 +19,7 @@ public class ReaderWriter {
      * Blocks application until User presses enter
      */
     public static void pressEnterToContinue() {
-        System.out.println("\nPressione Enter tecla para continuar...");
+        System.out.println("\nPress Enter key to Continue...");
         try {
             scin.nextLine();
         } catch (Exception e) {
